@@ -1,0 +1,41 @@
+/* Timesheet Detail Section */
+
+.timesheet-detail {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timesheet-detail .input-group {
+    max-width: 300px;
+}
+
+.timesheet-detail .table {
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.timesheet-detail .table th,
+.timesheet-detail .table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px;
+    border: 1px solid #dee2e6;
+}
+
+.timesheet-detail .table thead th {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+.timesheet-detail .btn-outline-success {
+    border-radius: 25px;
+    padding: 8px 20px;
+}
+
+.timesheet-detail .table td:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}

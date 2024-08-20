@@ -1,0 +1,76 @@
+<?php
+    require("TimesheetUpdateModal.phtml");
+?>
+
+<!-- Timesheet Header Section -->
+<header class="bg-light text-center py-4">
+    <div class="container">
+        <h2 class="mb-0">Timesheet for [Employee Name]</h2>
+    </div>
+</header>
+
+<!-- Timesheet Period and Table -->
+<section class="timesheet-detail py-4">
+    <div class="container">
+        <!-- Timesheet Period Selector -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="text-muted mb-0">Timesheet Period</h5>
+            <div class="input-group" style="max-width: 300px;">
+                <input type="text" class="form-control" id="timesheet-period" placeholder="2024-08-19 to 2024-08-25">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="fas fa-calendar-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timesheet Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Project</th>
+                        <th>Activity</th>
+                        <th>19 Mon</th>
+                        <th>20 Tue</th>
+                        <th>21 Wed</th>
+                        <th>22 Thu</th>
+                        <th>23 Fri</th>
+                        <th>24 Sat</th>
+                        <th>25 Sun</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Row -->
+                    <tr>
+                        <td>ACME Ltd - ACME Ltd</td>
+                        <td>Administration</td>
+                        <td data-bs-toggle="modal" data-bs-target="#updateTimesheetModal" class"lk">08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">Total</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                        <td>08:00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(".timesheet-detail .container .table-responsive table tbody tr > td").addClass("tesst");
+</script>

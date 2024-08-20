@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <?php require("include/meta.phtml"); ?>
+</head>
+
+<body class="login-body">
+    <div class="login-container">
+        <h1 class="login-title">Login</h1>
+        <form class="login-form" method="post" action="?action=login&isLogin">
+            <div class=d-flex>
+                <i class="bi bi-person"></i>
+                <label class="login-label" for="username">Username</label>
+
+            </div>
+            <input class="login-input" type="text" id="username" name="username" required placeholder="Enter username">
+
+            <div class="d-flex">
+                <i class="bi bi-key"></i>
+                <label class="login-label" for="password">Password</label>
+            </div>
+
+            <input class="login-input" type="password" id="password" name="password" required placeholder="Enter password">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+    </div>
+</body>
+
+</html>
