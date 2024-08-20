@@ -1,0 +1,90 @@
+<?php
+require("./view/ProfileManagement/EditProfileModal.phtml");
+require("./view/ProfileManagement/ConfirmDeactivateModal.phtml");
+?>
+<!-- Navigation Bar -->
+<div class="profile-management-nav-bar">
+    <div class="container d-flex justify-content-end py-3">
+        <a href="#" class="mx-1 nav-link active">Profile</a>
+        <a href="#" class="mx-1 nav-link">Leave</a>
+        <a href="#" class="mx-1 nav-link">WFH</a>
+    </div>
+</div>
+
+<!-- Header Section -->
+<header class="bg-light text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Employee Management</h1>
+        <p class="lead">View, add, edit, and manage profile information.</p>
+    </div>
+</header>
+
+<!-- Employee Table Section -->
+<section class="profile-management py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between mb-4">
+            <h2 class="mb-0">Employee List</h2>
+        </div>
+
+        <!-- Search -->
+        <div class="container py-4">
+            <div class="row border rounded rounded-4 p-3">
+                <div class="col">
+                    <div>
+                        <p class="fs-6 fw-medium">Employee Name</p>
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <p class="fs-6 fw-medium">Id Number</p>
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <p class="fs-6 fw-medium">Job Title</p>
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    </div>
+                </div>
+            </div>
+
+            <div class="container d-flex justify-content-end py-3">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+
+        <!-- Employee Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>ID Number</th>
+                        <th>Job Title</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>John Doe</td>
+                        <td>HR</td>
+                        <td>Manager</td>
+                        <td>(123) 456-7890</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deactivateEmployeeModal">
+                                <i class="bi bi-archive"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

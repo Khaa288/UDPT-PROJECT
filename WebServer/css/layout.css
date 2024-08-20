@@ -1,0 +1,76 @@
+/* General Styles */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f6f5fb;
+}
+
+
+/* Sidebar Styles */
+
+#wrapper {
+    display: flex;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+#sidebar-wrapper {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    z-index: 1000;
+    background-color: #cfe2ff;
+    transition: margin 0.25s ease-in-out;
+}
+
+.sidebar-heading {
+    font-size: 1.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.list-group-item {
+    border: none;
+}
+
+#page-content-wrapper {
+    flex: 1;
+    padding: 30px;
+    margin-left: 250px;
+    transition: margin 0.25s ease-in-out;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: -250px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    margin-left: 0;
+}
+
+
+/* Features Styles */
+
+.features .icon i {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.features h3 {
+    font-size: 1.25rem;
+    margin-top: 15px;
+}
+
+.features p {
+    color: #6c757d;
+}
+
+
+/* Footer Styles */
+
+footer {
+    position: relative;
+    width: 100%;
+    clear: both;
+}

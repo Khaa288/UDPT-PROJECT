@@ -1,0 +1,59 @@
+<?php
+require("./view/ProfileManagement/EditProfileModal.phtml");
+?>
+<!-- Navigation Bar -->
+<div class="profile-management-nav-bar">
+    <div class="container d-flex justify-content-end py-3">
+        <a href="#" class="nav-link">Profile</a>
+        <a href="#" class="nav-link">Leave</a>
+        <a href="#" class="nav-link active">WFH</a>
+    </div>
+</div>
+
+<!-- Header Section -->
+<header class="bg-light text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Employee Management</h1>
+        <p class="lead">View, add, edit, and manage profile information.</p>
+    </div>
+</header>
+
+<!-- Employee Table Section -->
+<section class="profile-management py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between mb-4">
+            <h2 class="mb-0">WFH Request List</h2>
+        </div>
+
+        <!-- Employee Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Date</th>
+                        <th>Duration (days)</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John Doe</td>
+                        <td>08/12/2024 - 15/12/2024</td>
+                        <td>7</td>
+                        <td>okavlksjdasd</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm">
+                                Accept
+                            </button>
+                            <button class="btn btn-danger btn-sm">
+                                Deny
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

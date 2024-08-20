@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <?php require("include/meta.phtml"); ?>
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+        <?php require("include/Sidebar.phtml"); ?>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <?php require("include/Navbar.phtml"); ?>
+            <?php require($VIEW); ?>
+            <?php require("include/Footer.phtml"); ?>
+        </div>
+    </div>
+    
+
+    <!-- Custom JS -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+.profile-management h2 {
+    font-size: 1.75rem;
+    color: #343a40;
+}
+
+.profile-management .table {
+    background-color: #ffffff;
+}
+
+.profile-management .table thead {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.profile-management .table th,
+.profile-management .table td {
+    vertical-align: middle;
+}
+
+.profile-management .btn {
+    margin-right: 5px;
+}
+
+.profile-management-nav-bar {
+    background-color: #f8f9fa;
+}
+
+.profile-management-nav-bar .nav-link {
+    color: #aab1bc;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    display: block;
+    width: 100%;
+    max-width: 120px;
+    text-decoration: none;
+}
+
+.profile-management-nav-bar .nav-link:hover,
+.profile-management-nav-bar .nav-link.active {
+    background-color: #e7f3ff;
+    color: #0056b3;
+}
