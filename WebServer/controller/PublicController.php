@@ -5,13 +5,13 @@ class PublicController
         // echo $_REQUEST["username"];
         // echo $_REQUEST["password"];
 
-        $VIEW = "./view/Dashboard.phtml";
+        $VIEW = "./view/ManagerDashboard.phtml";
         require("./template/Layout.phtml");
     }
 
     public function toHome()
     {
-        $VIEW = "./view/Dashboard.phtml";
+        $VIEW = "./view/ManagerDashboard.phtml";
         require("./template/Layout.phtml");
     }
 
