@@ -1,8 +1,8 @@
-"""inital commit
+"""add employee status
 
-Revision ID: e381cdeedf0a
-Revises: 
-Create Date: 2024-08-22 20:14:01.015089
+Revision ID: dc0ab6577622
+Revises: d78c0cb14ba3
+Create Date: 2024-08-23 14:55:57.120483
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e381cdeedf0a'
-down_revision = None
+revision = 'dc0ab6577622'
+down_revision = 'd78c0cb14ba3'
 branch_labels = None
 depends_on = None
 
@@ -39,6 +39,7 @@ def upgrade():
     sa.Column('Gender', sa.String(length=128), nullable=False),
     sa.Column('Role', sa.String(length=128), nullable=False),
     sa.Column('JobTitle', sa.String(length=128), nullable=False),
+    sa.Column('Status', sa.Enum('ACTIVATED', 'DEACTIVATED', name='employeestatus'), nullable=False),
     sa.ForeignKeyConstraint(['UserId'], ['User.UserId'], ),
     sa.PrimaryKeyConstraint('EmployeeId')
     )
