@@ -2,6 +2,7 @@ from flask import Flask
 import os
 from src.config.config import Config
 from dotenv import load_dotenv
+from src.routes import api
 
 # loading environment variables
 load_dotenv()
@@ -22,5 +23,5 @@ eureka_client.init(eureka_server="http://localhost:8761/",
                     instance_port=config.PORT,
                     instance_host='localhost')
 
-res = eureka_client.do_service("profile_service", "/api/employee/1")
-print("result of other service" + res)
+# import api blueprint to register it with app
+app.register_blueprint(api, url_prefix = "/api")

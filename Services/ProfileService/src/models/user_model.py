@@ -10,3 +10,6 @@ class User(db.Model):
     UserId: Mapped[int] = mapped_column(primary_key=True)
     Username: Mapped[str] = mapped_column(String(128), unique=True)
     Password: Mapped[str] = mapped_column(String(128))
+
+    def getUser(loginRequest):
+        return User.query.filter_by(Username = loginRequest["Username"], Password = loginRequest["Password"]).first()

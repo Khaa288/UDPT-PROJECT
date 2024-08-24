@@ -56,6 +56,9 @@ class Employee(db.Model):
     def get_by_id(employeeId):
         return db.get_or_404(Employee, employeeId)
     
+    def get_by_user_id(userId):
+        return Employee.query.filter_by(UserId = userId).first_or_404()
+    
     def update(employeeId, updated_employee):
         employee = db.get_or_404(Employee, employeeId)
 
