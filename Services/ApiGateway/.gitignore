@@ -12,3 +12,4 @@ docs/_build/
 instance/
 build/
 *.egg-info/
+.env
