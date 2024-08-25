@@ -28,7 +28,7 @@ class Employee(db.Model):
         if Employee.query.count() <= page_size:
             return 1
 
-        return Employee.query.count() / page_size
+        return round(Employee.query.count() / page_size)
 
     def get_all(params):
         # All filter are null -> return all records

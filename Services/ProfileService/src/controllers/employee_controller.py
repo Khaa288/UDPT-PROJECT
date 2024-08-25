@@ -6,6 +6,10 @@ from src.dtos.employee_request_dto import EmployeeUpdateRequestDto
 # user controller blueprint to be registered with api blueprint
 employee = Blueprint("employee", __name__)
 
+@employee.route('/page', methods = ["GET"])
+def get_employee_pages():
+    return jsonify(Employee.get_pages())
+
 @employee.route('', methods = ["GET"])
 def list():
     params = {
