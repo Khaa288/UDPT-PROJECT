@@ -2,11 +2,25 @@
 class PublicController
 {
     public function login(){
-        // echo $_REQUEST["username"];
-        // echo $_REQUEST["password"];
+        require("./api/Endpoints.php");
 
-        $VIEW = "./view/ManagerDashboard.phtml";
-        require("./template/Layout.phtml");
+        $api = $login_api;
+
+        $request_body = array(
+            'Username' => $_REQUEST["username"],
+            'Password' => $_REQUEST["password"]
+        );
+
+        $response = ApiRequest::post($api, null, $request_body);
+
+        if (!is_null($response)) {
+            $_SESSION["AuthUser"] = json_encode($response);
+            $VIEW = "./view/ManagerDashboard.phtml";
+            require("./template/Layout.phtml");
+        }
+        else {
+            PublicController::toLogin();
+        }
     }
 
     public function toHome()

@@ -2,6 +2,7 @@
 session_start();
 require_once("./controller/PublicController.php");
 require_once("./controller/TimesheetController.php");
+require_once("./api/ApiRequest.php");
 
 $action = "";
 if (isset($_REQUEST["action"])) {
@@ -39,6 +40,7 @@ switch ($action) {
         break;
 
     default:
+        unset($_SESSION["AuthUser"]);  
         $controller = new PublicController();
         $controller->toLogin();
 }
