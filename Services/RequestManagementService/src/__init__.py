@@ -23,9 +23,9 @@ app.register_blueprint(api, url_prefix = "/api")
 # import marshmallow for mapping
 ma.init_app(app)
 
-# import py_eureka_client.eureka_client as eureka_client
-# eureka_client.init(eureka_server="http://localhost:8761/",
-#                     app_name="request_management_service",
-#                     instance_ip=config.HOST,
-#                     instance_port=config.PORT,
-#                     instance_host='localhost')
+import py_eureka_client.eureka_client as eureka_client
+eureka_client.init(eureka_server="http://localhost:8761/",
+                    app_name="request_management_service",
+                    instance_ip=config.HOST,
+                    instance_port=config.PORT,
+                    instance_host='localhost')

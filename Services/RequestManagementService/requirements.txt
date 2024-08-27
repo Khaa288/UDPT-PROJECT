@@ -2,3 +2,4 @@ Flask
 python-dotenv
 pymongo
 flask-marshmallow
+py_eureka_client

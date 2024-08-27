@@ -19,15 +19,29 @@ def handle_login():
 
     return res
 
+@employee.route('/page', methods=["GET"])
+def get_employee_pages():
+    res = eureka_client.do_service(
+        app_name = "profile_service", 
+        service = f"/api/employee/page"
+    )
+    
+    return res
+
 @employee.route('', methods = ["GET"])
 def list():
     params = {
-        "firstName": request.args.get('firstName', default='', type=str),
-        "idCardNum": request.args.get('idCardNum', default='', type=str),
-        "jobTitle": request.args.get('jobTitle', default='', type=str),
+        "firstName": request.args.get('firstName'),
+        "idCardNum": request.args.get('idCardNum'),
+        "jobTitle": request.args.get('jobTitle'),
         "page": request.args.get('page'),
         "pageSize": request.args.get('pageSize')
     }
+
+    # delete null params
+    keys_to_remove = [key for key, value in params.items() if value is None]
+    for key in keys_to_remove:
+        del params[key]
     
     query_string = urllib.parse.urlencode(params)
 
