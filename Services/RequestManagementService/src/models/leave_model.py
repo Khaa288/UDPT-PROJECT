@@ -1,6 +1,9 @@
 from dataclasses import dataclass
+import math
 from flask import jsonify
 from src.models import db_leave
+from src.models.employee_model import Employee 
+from src.utils import RequestStatus
 from datetime import datetime
 import uuid
 
@@ -8,25 +11,25 @@ import uuid
 class Leave():
     LeaveId: uuid
     RequestId: uuid
-    EmployeeId: int
+    Employee: Employee # type: ignore
     FromDate: str
     ToDate: str
     Duration: int
     Note: str
     
-    def __init__(self, requestId, employeeId, fromDate, toDate, note = None):
+    def __init__(self, requestId, employee, fromDate, toDate, note = None):
         self.RequestId = requestId
         self.LeaveId = uuid.uuid4()
-        self.EmployeeId = employeeId
+        self.Employee = employee
         self.FromDate = fromDate
         self.ToDate = toDate
-        self.Duration = datetime.strptime(toDate, '%d-%m-%Y').date().day - datetime.strptime(fromDate, '%d-%m-%Y').date().day
+        self.Duration = (datetime.strptime(toDate, '%d-%m-%Y') - datetime.strptime(fromDate, '%d-%m-%Y')).days
         self.Note = note
 
     def create(leave):
         new_leave = Leave(
             leave["RequestId"],
-            leave["EmployeeId"], 
+            leave["Employee"], 
             leave["FromDate"], 
             leave["ToDate"], 
             leave["Note"]
@@ -39,7 +42,7 @@ class Leave():
         if db_leave.count_documents({}) <= page_size:
             return 1
 
-        return round(db_leave.count_documents({}) / page_size)
+        return  math.ceil(db_leave.count_documents({}) / page_size)
 
     def get_all(params):
         page = int(params['page'])

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
-
+import math
+from src.models.employee_model import Employee
 from flask import jsonify
 from src.models import db_wfh
 import uuid
@@ -8,15 +9,15 @@ import uuid
 class WFH():
     WfhId: uuid
     RequestId: uuid
-    EmployeeId: int
+    Employee: Employee # type: ignore
     Date: str
     WfhType: int
     Note: str
     
-    def __init__(self, requestId, employeeId, date, WfhType, note = None):
+    def __init__(self, requestId, employee, date, WfhType, note = None):
         self.RequestId = requestId
         self.WfhId = uuid.uuid4()
-        self.EmployeeId = employeeId
+        self.Employee = employee
         self.Date = date
         self.WfhType = WfhType
         self.Note = note
@@ -24,7 +25,7 @@ class WFH():
     def create(wfh):
         new_wfh = WFH(
             requestId = wfh["RequestId"],
-            employeeId = wfh["EmployeeId"], 
+            employee = wfh["Employee"], 
             date = wfh["Date"], 
             WfhType = wfh["WfhType"], 
             note = wfh["Note"]
@@ -37,7 +38,7 @@ class WFH():
         if db_wfh.count_documents({}) <= page_size:
             return 1
 
-        return round(db_wfh.count_documents({}) / page_size)
+        return  math.ceil(db_wfh.count_documents({}) / page_size)
 
     def get_all(params):
         page = int(params['page'])

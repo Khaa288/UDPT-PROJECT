@@ -20,7 +20,12 @@ def list_leaves():
         "pageSize": request.args.get('pageSize')
     }
 
-    return json.loads(json_util.dumps(Leave.get_all(params)))
+    leaves = Leave.get_all(params)
+
+    if leaves:
+        return json.loads(json_util.dumps(leaves))
+    
+    return []
 
 @leave.route('/request/page', methods = ["GET"])
 def get_leave_request_pages():
@@ -33,7 +38,12 @@ def list_leave_requests():
         "pageSize": request.args.get('pageSize')
     }
 
-    return json.loads(json_util.dumps(LeaveRequest.get_all(params)))
+    leave_requests = LeaveRequest.get_all(params)
+
+    if leave_requests:
+        return json.loads(json_util.dumps(leave_requests))
+    
+    return []
 
 @leave.route('/request', methods = ["POST"])
 def request_leave():

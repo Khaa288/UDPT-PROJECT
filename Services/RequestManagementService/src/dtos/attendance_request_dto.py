@@ -2,8 +2,8 @@ from src.models import ma
 
 class CheckInRequestDto(ma.Schema):
     class Meta:
-        fields = ("EmployeeId", "CheckInNote")
+        fields = ("Employee", "CheckInNote")
 
 class CheckOutRequestDto(ma.Schema):
     class Meta:
-        fields = ("EmployeeId", "CheckOutNote")
+        fields = ("Employee", "CheckOutNote")
