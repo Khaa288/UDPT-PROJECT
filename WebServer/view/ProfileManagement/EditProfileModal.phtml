@@ -1,62 +1,75 @@
+<?php
+    $FirstName = empty($profile->FirstName) ? '&nbsp;' : $profile->FirstName;
+    $MiddleName = empty($profile->MiddleName) ? '&nbsp;' : $profile->MiddleName;
+    $LastName = empty($profile->LastName) ? '&nbsp;' : $profile->LastName;
+    $IdCardNum = empty($profile->IdCardNum) ? '&nbsp;' : $profile->IdCardNum;
+    $TaxNum = empty($profile->TaxNum) ? '&nbsp;' : $profile->TaxNum;
+    $Address = empty($profile->Address) ? '&nbsp;' : $profile->Address;
+    $PhoneNum = empty($profile->PhoneNum) ? '&nbsp;' : $profile->PhoneNum;
+    $BankAccountNum = empty($profile->BankAccountNum) ? '&nbsp;' : $profile->BankAccountNum;
+    $JobTitle = empty($profile->JobTitle) ? '&nbsp;' : $profile->JobTitle;
+    $Gender = empty($profile->Gender) ? '&nbsp;' : $profile->Gender;
+?>
+
 <!-- Add Employee Modal -->
-<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+<div class="modal fade" id=<?php echo 'editProfile'.$profile->EmployeeId.'Modal'; ?> tabindex="-1" role="dialog" aria-labelledby=<?php echo 'editProfile'.$profile->EmployeeId.'ModalLabel'; ?> aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEmployeeModalLabel">Employee: </h5>
+                <h5 class="modal-title" id=<?php echo 'editProfile'.$profile->EmployeeId.'ModalLabel'; ?>>Employee: </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
-                <div class="rounded bg-secondary">
-                    <img src="" alt="avatar">
+                <div class="rounded bg-secondary d-flex justify-content-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/a6/Pok%C3%A9mon_Pikachu_art.png" alt="avatar">
                 </div>
 
-                <form>
+                <form method="post" action=<?php echo 'index.php?action=update-profile&employeeId='.$profile->EmployeeId ?>>
                     <div class="row">
                         <div class="col">
                             <div class="py-3">
                                 <label for="firstName">First Name</label>
-                                <input type="text" class="form-control" id="firstName">
+                                <input type="text" class="form-control" id="firstName" value=<?php echo $FirstName; ?> name="firstName">
                             </div>
                             <div class="py-3">
                                 <label for="middleName">Middle Name</label>
-                                <input type="text" class="form-control" id="middleName">
+                                <input type="text" class="form-control" id="middleName" value=<?php echo $MiddleName; ?> name="middleName">
                             </div>
                             <div class="py-3">
                                 <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control" id="lastName">
+                                <input type="text" class="form-control" id="lastName" value=<?php echo $LastName; ?>  name="lastName">
                             </div>
                             <div class="py-3">
                                 <label for="idCardNum">Id Card Number</label>
-                                <input type="text" class="form-control" id="idCardNum">
+                                <input type="text" class="form-control" id="idCardNum" value=<?php echo $IdCardNum; ?> name="idCardNum">
                             </div>
                             <div class="py-3">
                                 <label for="taxNum">Tax Number</label>
-                                <input type="text" class="form-control" id="taxNum">
+                                <input type="text" class="form-control" id="taxNum" value=<?php echo $TaxNum; ?> name="taxNum">
                             </div>
                         </div>
 
                         <div class="col">
                             <div class="py-3">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control" id="address">
+                                <input type="text" class="form-control" id="address" value=<?php echo $Address; ?> name="address">
                             </div>
                             <div class="py-3">
                                 <label for="phoneNum">Phone Number</label>
-                                <input type="text" class="form-control" id="phoneNum">
+                                <input type="text" class="form-control" id="phoneNum" value=<?php echo $PhoneNum; ?> name="phoneNum">
                             </div>
                             <div class="py-3">
                                 <label for="bankAccount">Bank Account</label>
-                                <input type="text" class="form-control" id="bankAccount">
+                                <input type="text" class="form-control" id="bankAccount" value=<?php echo $BankAccountNum; ?> name="bankAccountNum">
                             </div>
                             <div class="py-3">
                                 <label for="jobTitle">Job Title</label>
-                                <input type="text" class="form-control" id="jobTitle">
+                                <input type="text" class="form-control" id="jobTitle" value=<?php echo $JobTitle; ?> name="jobTitle">
                             </div>
                             <div class="py-3">
                                 <label for="gender">Gender</label>
-                                <input type="text" class="form-control" id="gender">
+                                <input type="text" class="form-control" id="gender" value=<?php echo $Gender; ?> name="gender">
                             </div>
                         </div>
                     </div>

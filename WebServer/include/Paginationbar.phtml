@@ -1,0 +1,32 @@
+<!-- Pagination Bar -->
+<div class="container my-4">
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <?php
+            // Previous Button
+            if ($_REQUEST["page"] == 1) {
+                $go_previous = '';
+            } else {
+                $go_previous = $action_url.'&page=' . ($_REQUEST["page"] - 1) . '&pageSize=5';
+            }
+            echo '<li class="page-item"><a class="page-link" href="' . $go_previous . '" tabindex="-1">Previous</a></li>';
+
+            for ($page = 1; $page <= $pages; $page++) {
+                if ($_REQUEST["page"] == $page) {
+                    echo '<li class="page-item active"><a class="page-link" href="">' . $page . '</a></li>';
+                } else {
+                    echo '<li class="page-item"><a class="page-link" href="'.$action_url.'&page=' . $page . '&pageSize=5">' . $page . '</a></li>';
+                }
+            }
+
+            // Next button
+            if ($_REQUEST["page"] == $pages) {
+                $go_next = '';
+            } else {
+                $go_next = $action_url.'&page=' . ($_REQUEST["page"] + 1) . '&pageSize=5';
+            }
+            echo '<li class="page-item"><a class="page-link" href="' . $go_next . '">Next</a></li>';
+            ?>
+        </ul>
+    </nav>
+</div>

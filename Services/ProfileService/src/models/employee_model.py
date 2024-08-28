@@ -25,7 +25,7 @@ class Employee(db.Model):
     Status: Mapped[EmployeeStatus] = mapped_column(Enum(EmployeeStatus))
 
     def get_pages(page_size = 5):
-        if Employee.query.count() <= page_size:
+        if Employee.query.filter(Employee.Status == EmployeeStatus.ACTIVATED).count() <= page_size:
             return 1
 
         return round(Employee.query.count() / page_size)
@@ -44,6 +44,7 @@ class Employee(db.Model):
                 )
             )
         
+        employees = employees.filter(Employee.Status == EmployeeStatus.ACTIVATED)
         employees = employees.order_by(Employee.EmployeeId)
 
         page = int(params['page'])

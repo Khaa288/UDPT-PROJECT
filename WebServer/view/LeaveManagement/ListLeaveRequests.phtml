@@ -4,11 +4,29 @@
 <!-- Navigation Bar -->
 <div class="profile-management-nav-bar">
     <div class="container d-flex justify-content-end py-3">
-        <a href="index.php?action=profile-management" class="mx-1 nav-link">Profile</a>
-        <a href="index.php?action=leave-management" class="mx-1 nav-link active">Leave</a>
-        <a href="index.php?action=wfh-management" class="mx-1 nav-link">WFH</a>
+        <a href="index.php?action=profile-management&page=1&pageSize=5" class="mx-1 nav-link">Profile</a>
+        <div class="dropdown mx-1">
+            <a href="#" class="nav-link dropdown-toggle active" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Leave
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="leaveDropdown">
+                <li><a class="dropdown-item" href="index.php?action=leave-management&page=1&pageSize=5">My Leave</a></li>
+                <li><a class="dropdown-item" href="index.php?action=leave-request-management&page=1&pageSize=5">Leave Request</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown mx-1">
+            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                WFH
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="wfhDropdown">
+                <li><a class="dropdown-item" href="index.php?action=wfh-management&page=1&pageSize=5">My WFH</a></li>
+                <li><a class="dropdown-item" href="index.php?action=wfh-request-management&page=1&pageSize=5">WFH Request</a></li>
+            </ul>
+        </div>
     </div>
 </div>
+
 
 <!-- Header Section -->
 <header class="bg-light text-center py-5">
@@ -27,7 +45,7 @@
 
         <!-- Employee Table -->
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped text-nowrap table-hover">
                 <thead class="table-dark">
                     <tr>
                         <th>Employee Name</th>
@@ -38,22 +56,31 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php foreach($leave_requests as $leave_request): ?>
                     <tr>
-                        <td>John Doe</td>
-                        <td>08/12/2024 - 15/12/2024</td>
-                        <td>7</td>
-                        <td>okavlksjdasd</td>
+                        <td><?php echo $leave_request->Employee->EmployeeName?></td>
                         <td>
-                            <button class="btn btn-primary btn-sm">
+                            <?php echo $leave_request->FromDate.'&nbsp;&nbsp;to&nbsp;&nbsp;'.$leave_request->ToDate ?>
+                        </td>
+                        <td><?php echo $leave_request->Duration?></td>
+                        <td><?php echo $leave_request->Note?></td>
+                        <td>
+                            <a href = <?php echo 'index.php?action=accept-leave&requestId='.$leave_request->RequestId; ?> class="btn btn-primary btn-sm">
                                 Accept
-                            </button>
-                            <button class="btn btn-danger btn-sm" >
+                            </a>
+                            <a href = <?php echo 'index.php?action=deny-leave&requestId='.$leave_request->RequestId; ?> class="btn btn-danger btn-sm" >
                                 Deny
-                            </button>
+                            </a>
                         </td>
                     </tr>
+                    <?php endforeach?>
                 </tbody>
             </table>
         </div>
+
+        <?php
+            $action_url = 'index.php?action=leave-request-management';
+            require('./include/Paginationbar.phtml')
+        ?>
     </div>
 </section>

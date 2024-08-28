@@ -1,13 +1,26 @@
-<?php
-require("./view/ProfileManagement/EditProfileModal.phtml");
-require("./view/ProfileManagement/ConfirmDeactivateModal.phtml");
-?>
 <!-- Navigation Bar -->
 <div class="profile-management-nav-bar">
     <div class="container d-flex justify-content-end py-3">
-        <a href="index.php?action=profile-management" class="mx-1 nav-link active">Profile</a>
-        <a href="index.php?action=leave-management" class="mx-1 nav-link">Leave</a>
-        <a href="index.php?action=wfh-management" class="mx-1 nav-link">WFH</a>
+        <a href="index.php?action=profile-management&page=1&pageSize=5" class="mx-1 nav-link active">Profile</a>
+        <div class="dropdown mx-1">
+            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Leave
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="leaveDropdown">
+                <li><a class="dropdown-item" href="index.php?action=leave-management&page=1&pageSize=5">My Leave</a></li>
+                <li><a class="dropdown-item" href="index.php?action=leave-request-management&page=1&pageSize=5">Leave Request</a></li>
+            </ul>
+        </div>
+
+        <div class="dropdown mx-1">
+            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                WFH
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="wfhDropdown">
+                <li><a class="dropdown-item" href="index.php?action=wfh-management&page=1&pageSize=5">My WFH</a></li>
+                <li><a class="dropdown-item" href="index.php?action=wfh-request-management&page=1&pageSize=5">WFH Request</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -56,7 +69,7 @@ require("./view/ProfileManagement/ConfirmDeactivateModal.phtml");
 
         <!-- Employee Table -->
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-hover">
                 <thead class="table-dark">
                     <tr>
                         <th>First Name</th>
@@ -68,42 +81,36 @@ require("./view/ProfileManagement/ConfirmDeactivateModal.phtml");
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>John Doe</td>
-                        <td>HR</td>
-                        <td>Manager</td>
-                        <td>(123) 456-7890</td>
-                        <td>
-                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
-                                <i class="bi bi-pencil-square"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deactivateEmployeeModal">
-                                <i class="bi bi-archive"></i>
-                            </button>
-                        </td>
-                    </tr>
+                    <?php foreach ($profiles as $profile): ?>
+                        <?php
+                        require("./view/ProfileManagement/EditProfileModal.phtml");
+                        require("./view/ProfileManagement/ConfirmDeactivateModal.phtml");
+                        ?>
+
+                        <tr>
+                            <td><?php echo $profile->FirstName ?></td>
+                            <td><?php echo $profile->MiddleName ?></td>
+                            <td><?php echo $profile->LastName ?></td>
+                            <td><?php echo $profile->IdCardNum ?></td>
+                            <td><?php echo $profile->JobTitle ?></td>
+
+                            <td>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target=<?php echo '#editProfile' . $profile->EmployeeId . 'Modal'; ?>>
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deactivateEmployeeModal">
+                                    <i class="bi bi-archive"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>
 
-        <!-- Pagination Bar -->
-        <div class="container my-4">
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <?php
+            $action_url = 'index.php?action=profile-management';
+            require('./include/Paginationbar.phtml')
+        ?>
     </div>
 </section>

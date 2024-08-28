@@ -39,7 +39,7 @@ require("./view/ProfileManagement/EditProfileModal.phtml");
 <section class="profile-management py-5">
     <div class="container">
         <div class="d-flex justify-content-between mb-4">
-            <h2 class="mb-0">WFH Request List</h2>
+            <h2 class="mb-0">WFH List</h2>
         </div>
 
         <div class="table-responsive">
@@ -54,30 +54,23 @@ require("./view/ProfileManagement/EditProfileModal.phtml");
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($wfh_requests as $wfh_request): ?>
-                    <tr>
-                        <td><?php echo $wfh_request->Employee->EmployeeName?></td>
-                        <td>
-                            <?php echo $wfh_request->Date ?>
-                        </td>
-                        <td><?php echo $wfh_request->WfhType?></td>
-                        <td><?php echo $wfh_request->Note?></td>
-                        <td>
-                            <a href = <?php echo 'index.php?action=accept-wfh&requestId='.$wfh_request->RequestId; ?> class="btn btn-primary btn-sm">
-                                Accept
-                            </a>
-                            <a href = <?php echo 'index.php?action=deny-wfh&requestId='.$wfh_request->RequestId; ?> class="btn btn-danger btn-sm" >
-                                Deny
-                            </a>
-                        </td>
-                    </tr>
-                    <?php endforeach?>
+                    <?php foreach ($wfhs as $wfh): ?>
+                        <tr>
+                            <td><?php echo $wfh->Employee->EmployeeName ?></td>
+                            <td>
+                                <?php echo $wfh->Date ?>
+                            </td>
+                            <td><?php echo $wfh->WfhType ?></td>
+                            <td><?php echo $wfh->Note ?></td>
+                            <td><p class="text-success"><b>Accepted</b></p></td>
+                        </tr>
+                    <?php endforeach ?>
                 </tbody>
             </table>
         </div>
 
         <?php
-            $action_url = 'index.php?action=wfh-request-management';
+            $action_url = 'index.php?action=wfh-management';
             require('./include/Paginationbar.phtml')
         ?>
     </div>
