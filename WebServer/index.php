@@ -5,6 +5,7 @@ require_once("./controller/ProfileController.php");
 require_once("./controller/TimesheetController.php");
 require_once("./controller/LeaveController.php");
 require_once("./controller/WfhController.php");
+require_once("./controller/AttendanceController.php");
 require_once("./api/ApiRequest.php");
 
 $action = "";
@@ -21,10 +22,26 @@ switch ($action) {
         $controller = new PublicController();
         $controller->toHome();
         break;
+    case "attendance":
+        $controller = new PublicController();
+        $controller->toAttendance();
+        break; 
+    case "check-in":
+        $controller = new AttendanceController();
+        $controller->checkIn();
+        break; 
+    case "check-out":
+        $controller = new AttendanceController();
+        $controller->checkOut();
+        break;   
     case "profile-management":
         $controller = new PublicController();
-        $controller->toProfile();
+        $controller->toProfileManagement();
         break;
+    case "profile":
+        $controller = new PublicController();
+        $controller->toProfile();
+        break; 
     case "update-profile":
         $controller = new ProfileController();
         $controller->updateProfile();

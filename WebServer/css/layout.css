@@ -74,3 +74,13 @@ footer {
     width: 100%;
     clear: both;
 }
+
+.btn-success {
+    background-color: #8bc34a;
+    border-color: #8bc34a;
+}
+
+.btn-success:hover {
+    background-color: #7cb342;
+    border-color: #7cb342;
+}

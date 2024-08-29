@@ -1,0 +1,111 @@
+<?php
+$FirstName = empty($profile->FirstName) ? '&nbsp;' : $profile->FirstName;
+$MiddleName = empty($profile->MiddleName) ? '&nbsp;' : $profile->MiddleName;
+$LastName = empty($profile->LastName) ? '&nbsp;' : $profile->LastName;
+$IdCardNum = empty($profile->IdCardNum) ? '&nbsp;' : $profile->IdCardNum;
+$TaxNum = empty($profile->TaxNum) ? '&nbsp;' : $profile->TaxNum;
+$Address = empty($profile->Address) ? '&nbsp;' : $profile->Address;
+$PhoneNum = empty($profile->PhoneNum) ? '&nbsp;' : $profile->PhoneNum;
+$BankAccountNum = empty($profile->BankAccountNum) ? '&nbsp;' : $profile->BankAccountNum;
+$JobTitle = empty($profile->JobTitle) ? '&nbsp;' : $profile->JobTitle;
+$Gender = empty($profile->Gender) ? '&nbsp;' : $profile->Gender;
+?>
+
+<!-- Navigation Bar -->
+<div class="profile-management-nav-bar px-3">
+    <div class="container d-flex justify-content-end py-3">
+        <a href="" class="mx-1 nav-link active">Profile</a>
+        <a href="index.php?action=attendance" class="mx-1 nav-link">Attendance</a>
+    </div>
+</div>
+
+<div class="container-fluid p-4">
+    <!-- Employee Header -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="d-flex flex-column align-items-center text-center">
+                <img src="https://via.placeholder.com/100" class="rounded-circle" alt="Employee Image">
+                <h4 class="mt-3">Welcome back <br> <?php echo $FirstName . ' ' . $MiddleName . ' ' . $LastName ?></h4>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="card">
+                <form method="post" action=<?php echo 'index.php?action=update-profile&employeeId='.$profile->EmployeeId ?>>
+                    <div class="card-body">
+                        <h5 class="card-title">Profile Details</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="fullName" class="form-label">Employee Full Name</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="fullName" value=<?php echo $FirstName ?> name="firstName">
+                                    <input type="text" class="form-control" id="middleName" value=<?php echo $MiddleName ?> name="middleName">
+                                    <input type="text" class="form-control" id="lastName" value=<?php echo $LastName ?> name="lastName">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control mb-3" id="address" value=<?php echo $Address ?> name="address">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="phoneNum" class="form-label">Phone Number</label>
+                                <input type="text" class="form-control mb-3" id="phoneNum" value=<?php echo $PhoneNum ?> name="phoneNum">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="taxNum" class="form-label">Bank Account Number</label>
+                                <input type="text" class="form-control mb-3" id="taxNum" value=<?php echo $BankAccountNum ?> name="bankAccountNum">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="form-label">Gender</label>
+                                <div class="row px-4">
+                                    <div class="form-check col-md-6">
+                                        <?php
+                                        if ($profile->Gender == 'Male') {
+                                            echo "";
+                                        }
+                                        ?>
+                                        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male">
+                                        <label class="form-check-label" for="genderMale">Male</label>
+                                    </div>
+                                    <div class="form-check col-md-6">
+                                        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="Female">
+                                        <label class="form-check-label" for="genderFemale">Female</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="text" value=<?php echo $IdCardNum?> name="idCardNum" hidden>
+                    <input type="text" value=<?php echo $TaxNum?> name="taxNum" hidden>
+                    <input type="text" value=<?php echo $JobTitle?> name="jobTitle" hidden>
+
+                    <div class="card-footer text-end">
+                        <button type="submit" class="btn btn-success" id="editProfileBtn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var gender = '<?php echo $Gender ?>';
+
+    if (gender === 'Male') {
+        $('#genderMale').prop('checked', true);
+    } else if (gender === 'Female') {
+        $('#genderFemale').prop('checked', true);
+    }
+
+    
+    $('#editProfileBtn').on('click', function() {
+        $('#editProfileBtn').prepend(
+            '<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>&nbsp;'
+        );
+    });
+</script>

@@ -7,8 +7,6 @@ class ProfileController
 
         $employeeId = $_REQUEST["employeeId"];
 
-        echo $_REQUEST["firstName"];
-        echo $_REQUEST["middleName"];
         $body = array(
             "FirstName" => $_REQUEST["firstName"],
             "MiddleName" => $_REQUEST["middleName"],
@@ -24,7 +22,14 @@ class ProfileController
 
         ApiRequest::put($update_profiles_api.$employeeId, null, $body);
 
-        header("Location: index.php?action=profile-management&page=1&pageSize=5");
+        if (json_decode($_SESSION["AuthUser"])->Role == 'Employee') {
+            header("Location: index.php?action=profile");
+        }
+
+        else if (json_decode($_SESSION["AuthUser"]->Role) == 'Manager') {
+            header("Location: index.php?action=profile-management&page=1&pageSize=5");
+        }
+        
     }
 
     public function deactivateProfile() 

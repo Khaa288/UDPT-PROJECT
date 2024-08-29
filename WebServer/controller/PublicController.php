@@ -46,7 +46,7 @@ class PublicController
         require($VIEW);
     }
 
-    public function toProfile() {
+    public function toProfileManagement() {
         require("./api/Endpoints.php");
 
         $pages = ApiRequest::get($get_profiles_pages_api, null);
@@ -58,6 +58,49 @@ class PublicController
 
         $VIEW = "./view/ProfileManagement/ListProfiles.phtml";
         require("./template/Layout.phtml");
+    }
+
+    public function toProfile() {
+        require("./api/Endpoints.php");
+
+        $api = $get_profile_by_id_api;
+
+        if (isset($_SESSION["AuthUser"])) {
+            $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+
+            $profile = ApiRequest::get($api.$employee_id, null, null);
+            $VIEW = "./view/ProfileManagement/EmployeeProfile.phtml";
+
+            require("./template/Layout.phtml");
+        }
+        else {
+            PublicController::toLogin();
+        }
+    }
+
+    public function toAttendance() {
+        require("./api/Endpoints.php");
+
+        if (isset($_SESSION["AuthUser"])) {
+            $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+
+            $checkInInfo = ApiRequest::get($get_employee_current_attendance_api.$employee_id.'/current', null, null);
+            $employee = ApiRequest::get($get_profile_by_id_api.$employee_id, null, null);
+
+            $attendance_employee = array(
+                'EmployeeId' => $employee->EmployeeId,
+                'EmployeeName' => $employee->FirstName.'&nbsp;'.$employee->MiddleName.'&nbsp;'.$employee->LastName,
+                'EmployeeIdCardNum' => $employee->IdCardNum,
+                'EmployeeJobTitle' => $employee->JobTitle
+            );
+            
+            $VIEW = "./view/ProfileManagement/Attendance.phtml";
+
+            require("./template/Layout.phtml");
+        }
+        else {
+            PublicController::toLogin();
+        }
     }
 
     public function toTimesheet() {

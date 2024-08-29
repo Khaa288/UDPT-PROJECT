@@ -1,12 +1,13 @@
 <?php
     $gateway_host = 'http://127.0.0.1';
-    $gateway_port = '3000';
+    $gateway_port = '5000';
     $url = $gateway_host.':'.$gateway_port.'/api';
 
     $login_api = $url.'/auth/login';
     
     $get_profiles_pages_api = $url.'/employee/page';
     $get_profiles_api = $url.'/employee';
+    $get_profile_by_id_api = $url.'/employee/';
     $update_profiles_api = $url.'/employee/';
     $deactivate_profile_api = $url.'/employee/';
 
@@ -25,4 +26,8 @@
     $accept_wfh_api = $url.'/wfh/request/';
     $deny_wfh_api = $url.'/wfh/request/';
     $request_wfh_api = $url.'/wfh/request';
+
+    $get_employee_current_attendance_api = $url.'/attendance/employee/';
+    $check_in_api = $url.'/attendance/check-in';
+    $check_out_api = $url.'/attendance/check-out';
 ?>
