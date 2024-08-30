@@ -38,7 +38,7 @@ $isCheckIn = isset($checkInInfo);
     <div class="card">
         <div class="card-body">
             <h5 class="card-title"><?php echo $isCheckIn ? 'Check Out' : 'Check In' ?></h5>
-            <form method="post" action=<?php echo $isCheckIn ? 'index?action=check-out' : 'index?action=check-in' ?>>
+            <form method="post" action=<?php echo $isCheckIn ? 'index.php?action=check-out' : 'index.php?action=check-in' ?>>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="mb-3">

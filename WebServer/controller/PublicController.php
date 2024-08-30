@@ -2,6 +2,11 @@
 class PublicController
 {
     public function login(){
+        $strava_code = $_REQUEST['code'];
+        if (isset($strava_code)) {
+
+        }
+
         require("./api/Endpoints.php");
 
         $api = $login_api;
