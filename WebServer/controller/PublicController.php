@@ -2,11 +2,6 @@
 class PublicController
 {
     public function login(){
-        $strava_code = $_REQUEST['code'];
-        if (isset($strava_code)) {
-
-        }
-
         require("./api/Endpoints.php");
 
         $api = $login_api;
@@ -109,6 +104,20 @@ class PublicController
     }
 
     public function toTimesheet() {
+        require("./api/Endpoints.php");
+
+        $pages = ApiRequest::get($get_timesheet_pages_api, null);
+
+        $timesheets = ApiRequest::get($get_timesheets_api, array(
+            'page' => $_GET["page"],
+            'pageSize' => $_GET["pageSize"]
+        ));
+
+        $VIEW = "./view/TimesheetManagement/ListTimesheets.phtml";
+        require("./template/Layout.phtml");
+    }
+
+    public function toTimesheetRequest() {
         $VIEW = "./view/TimesheetManagement/ListTimesheets.phtml";
         require("./template/Layout.phtml");
     }

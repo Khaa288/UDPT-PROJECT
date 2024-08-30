@@ -1,5 +1,11 @@
 <?php
-    require("TimesheetUpdateModal.phtml");
+require("TimesheetUpdateModal.phtml");
+require('./util/Calendar.php');
+
+$calendar = new Calendar();
+$calendar->setYear($timesheet->Year);
+$calendar->setMonthNumber($timesheet->Month);
+$calendar->create();
 ?>
 
 <!-- Timesheet Header Section -->
@@ -15,14 +21,6 @@
         <!-- Timesheet Period Selector -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h5 class="text-muted mb-0">Timesheet Period</h5>
-            <div class="input-group" style="max-width: 300px;">
-                <input type="text" class="form-control" id="timesheet-period" placeholder="2024-08-19 to 2024-08-25">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">
-                        <i class="fas fa-calendar-alt"></i>
-                    </button>
-                </div>
-            </div>
         </div>
 
         <!-- Timesheet Table -->
@@ -30,41 +28,37 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>Project</th>
-                        <th>Activity</th>
-                        <th>19 Mon</th>
-                        <th>20 Tue</th>
-                        <th>21 Wed</th>
-                        <th>22 Thu</th>
-                        <th>23 Fri</th>
-                        <th>24 Sat</th>
-                        <th>25 Sun</th>
+                        <?php foreach($calendar->getWeekDays() as $day_name): ?>
+                            <th>
+                                <?php echo $day_name; ?>
+                            </th>
+                        <?php endforeach ?>
                     </tr>
                 </thead>
-                <tbody>
-                    <!-- Example Row -->
-                    <tr>
-                        <td>ACME Ltd - ACME Ltd</td>
-                        <td>Administration</td>
-                        <td data-bs-toggle="modal" data-bs-target="#updateTimesheetModal" class"lk">08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                    </tr>
 
-                    <tr>
-                        <td colspan="2">Total</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                        <td>08:00</td>
-                    </tr>
+                <tbody>
+                    <?php foreach($calendar->getWeeks() as $week):?>
+                        <tr>
+                            <?php foreach($week as $day_number):?>
+                                <?php if ($day_number != ''): ?>
+                                    <td data-bs-toggle="modal" data-bs-target=<?php echo '#updateTimesheetModal' ?> class"lk">
+                                        <?php echo $day_number?>
+                                    </td>
+                                <?php else: ?>
+                                    <td><?php echo $day_number?></td>
+                                <?php endif?>
+                            <?php endforeach?>
+
+                            <!-- Print the remaining white spaces -->
+                            <?php
+                                $count = count($week);
+                                while(7 - $count > 0) {
+                                    echo "<td></td>";
+                                    $count++;
+                                }
+                            ?>
+                        </tr>
+                    <?php endforeach?>
                 </tbody>
             </table>
         </div>

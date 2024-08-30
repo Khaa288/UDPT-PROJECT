@@ -1,6 +1,6 @@
 <?php
     $gateway_host = 'http://127.0.0.1';
-    $gateway_port = '5000';
+    $gateway_port = '3001';
     $url = $gateway_host.':'.$gateway_port.'/api';
 
     $login_api = $url.'/auth/login';
@@ -30,4 +30,10 @@
     $get_employee_current_attendance_api = $url.'/attendance/employee/';
     $check_in_api = $url.'/attendance/check-in';
     $check_out_api = $url.'/attendance/check-out';
+
+    $get_timesheets_api = $url.'/timesheet';
+    $get_timesheet_update_requests_api = $url.'/timesheet/request';
+    $get_timesheet_pages_api = $url.'/timesheet/page';
+    $get_timesheet_update_request_pages_api = $url.'/timesheet/request/page';
+    $get_timesheet_by_id_api = $url.'/timesheet/';
 ?>
