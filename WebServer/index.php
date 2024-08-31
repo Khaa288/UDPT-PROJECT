@@ -51,6 +51,10 @@ switch ($action) {
         $controller->deactivateProfile();
         break;  
     
+    case "employee-leave-request-management":
+        $controller = new PublicController();
+        $controller->toEmployeeLeaveRequest();
+        break;
     case "leave-request-management":
         $controller = new PublicController();
         $controller->toLeaveRequest();
@@ -72,6 +76,10 @@ switch ($action) {
         $controller->acceptLeave();
         break;
 
+    case "employee-wfh-request-management":
+        $controller = new PublicController();
+        $controller->toEmployeeWFHRequest();
+        break;
     case "wfh-management":
         $controller = new PublicController();
         $controller->toWFH();

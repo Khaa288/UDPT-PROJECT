@@ -161,6 +161,26 @@ class PublicController
         require("./template/Layout.phtml");
     }
 
+    public function toEmployeeLeaveRequest()
+    {
+        require("./api/Endpoints.php");
+
+        $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+
+        $pages = ApiRequest::get($get_leave_request_pages_api, array(
+            'employeeId' => $employee_id
+        ));
+
+        $leave_requests = ApiRequest::get($get_leave_requests_api, array(
+            'page' => $_GET["page"],
+            'pageSize' => $_GET["pageSize"],
+            'employeeId' => $employee_id
+        ));
+
+        $VIEW = "./view/LeaveManagement/ListEmployeeLeaveRequests.phtml";
+        require("./template/Layout.phtml");
+    }
+
     public function toWFH()
     {
         require("./api/Endpoints.php");
@@ -188,6 +208,26 @@ class PublicController
         ));
 
         $VIEW = "./view/WFHManagement/ListWFHRequests.phtml";
+        require("./template/Layout.phtml");
+    }
+
+    public function toEmployeeWFHRequest()
+    {
+        require("./api/Endpoints.php");
+
+        $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+
+        $pages = ApiRequest::get($get_wfh_request_pages_api, array(
+            'employeeId' => $employee_id
+        ));
+
+        $wfh_requests = ApiRequest::get($get_wfh_requests_api, array(
+            'page' => $_GET["page"],
+            'pageSize' => $_GET["pageSize"],
+            'employeeId' => $employee_id
+        ));
+
+        $VIEW = "./view/WFHManagement/ListEmployeeWFHRequests.phtml";
         require("./template/Layout.phtml");
     }
 }

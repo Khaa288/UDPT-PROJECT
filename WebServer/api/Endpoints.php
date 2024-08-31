@@ -14,7 +14,7 @@
     $get_leaves_api = $url.'/leave';
     $get_leave_requests_api = $url.'/leave/request';
     $get_leave_pages_api = $url.'/leave/page';
-    $get_leave_request_pages_api = $url.'/leave/page';
+    $get_leave_request_pages_api = $url.'/leave/request/page';
     $accept_leave_api = $url.'/leave/request/';
     $deny_leave_api = $url.'/leave/request/';
     $request_leave_api = $url.'/leave/request';
