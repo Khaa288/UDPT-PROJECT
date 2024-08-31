@@ -24,7 +24,11 @@ def list_wfhs():
 
 @wfh.route('/request/page', methods = ["GET"])
 def get_wfh_request_pages():
-    return jsonify(WfhRequest.get_pages())
+    params = {
+        "employeeId": request.args.get('employeeId')
+    }
+
+    return jsonify(WfhRequest.get_pages(params))
 
 @wfh.route('/request', methods = ["GET"])
 def list_wfh_requests():

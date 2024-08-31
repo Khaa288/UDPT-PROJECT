@@ -29,7 +29,11 @@ def list_leaves():
 
 @leave.route('/request/page', methods = ["GET"])
 def get_leave_request_pages():
-    return jsonify(LeaveRequest.get_pages())
+    params = {
+        "employeeId": request.args.get('employeeId')
+    }
+
+    return jsonify(LeaveRequest.get_pages(params))
 
 @leave.route('/request', methods = ["GET"])
 def list_leave_requests():

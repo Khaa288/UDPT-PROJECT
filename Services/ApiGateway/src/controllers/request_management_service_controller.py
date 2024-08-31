@@ -39,9 +39,15 @@ def list_leaves():
 
 @leave.route('/request/page', methods = ["GET"])
 def get_leave_request_pages():
+    params = {
+        "employeeId": request.args.get('employeeId')
+    }
+
+    params = urllib.parse.urlencode(params)
+
     res = eureka_client.do_service(
         app_name = "request_management_service", 
-        service = f"/api/leave/request/page", 
+        service = f"/api/leave/request/page?{params}", 
         method="GET",
         headers=({"Content-Type": "application/json"})
     )
@@ -135,9 +141,15 @@ def list_wfhs():
 
 @wfh.route('/request/page', methods = ["GET"])
 def get_wfh_request_pages():
+    params = {
+        "employeeId": request.args.get('employeeId')
+    }
+
+    params = urllib.parse.urlencode(params)
+
     res = eureka_client.do_service(
         app_name = "request_management_service", 
-        service = f"/api/wfh/request/page", 
+        service = f"/api/wfh/request/page?{params}", 
         method="GET",
         headers=({"Content-Type": "application/json"})
     )

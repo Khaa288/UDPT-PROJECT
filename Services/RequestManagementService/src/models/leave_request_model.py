@@ -28,8 +28,13 @@ class LeaveRequest():
         self.Status = RequestStatus.PENDING
         self.CreatedDate = datetime.now()
 
-    def get_pages(page_size = 5):
-        document_nums = db_leave_request.count_documents({ 'Status': RequestStatus.PENDING.value })
+    def get_pages(params, page_size = 5):
+        request_filter = {'Status': RequestStatus.PENDING}
+
+        if params['employeeId'] is not None and params['employeeId'] != 'None':
+            request_filter['Employee.EmployeeId'] = int(params['employeeId'])
+
+        document_nums = db_leave_request.count_documents(request_filter)
 
         if  document_nums <= page_size:
             return 1
@@ -40,12 +45,12 @@ class LeaveRequest():
         page = int(params['page'])
         pageSize = int(params['pageSize'])
 
-        leave_filter = {'Status': RequestStatus.PENDING}
+        request_filter = {'Status': RequestStatus.PENDING}
 
         if params['employeeId'] is not None and params['employeeId'] != 'None':
-            leave_filter['Employee.EmployeeId'] = int(params['employeeId'])
+            request_filter['Employee.EmployeeId'] = int(params['employeeId'])
 
-        leave_requests = db_leave_request.find(leave_filter).limit(pageSize)
+        leave_requests = db_leave_request.find(request_filter).limit(pageSize)
         leave_requests = leave_requests.skip(pageSize*(page - 1))
 
         return leave_requests
