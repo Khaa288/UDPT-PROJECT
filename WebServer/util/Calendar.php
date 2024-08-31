@@ -4,7 +4,7 @@ class Calendar extends DateTime
     protected $year;
     protected $month_number;
     protected $week_days = [
-        'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+        'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'
     ];
     protected $weeks = [];
 

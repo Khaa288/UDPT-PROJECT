@@ -97,9 +97,29 @@ switch ($action) {
         $controller = new PublicController();
         $controller->toTimesheet();
         break;
+    case "timesheet-request-management":
+        $controller = new PublicController();
+        $controller->toTimesheetRequest();
+        break;   
     case "timesheet-detail":
         $controller = new TimesheetController();
         $controller->toTimesheetDetail();
+        break;
+    case "update-timesheet":
+        $controller = new TimesheetController();
+        $controller->updateTimesheet();
+        break;
+    case "request-update-timesheet":
+        $controller = new TimesheetController();
+        $controller->requestUpdateTimesheet();
+            break;
+    case "accept-timesheet-update":
+        $controller = new TimesheetController();
+        $controller->acceptUpdateRequest();
+        break;
+    case "deny-timesheet-update":
+        $controller = new TimesheetController();
+        $controller->denyUpdateRequest();
         break;
 
     default:

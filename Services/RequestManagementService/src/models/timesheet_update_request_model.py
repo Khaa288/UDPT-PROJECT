@@ -42,6 +42,8 @@ class TimesheetUpdateRequest():
         timesheets = db_timesheet_update_request.find({'Status': RequestStatus.PENDING}).limit(pageSize)
         timesheets = timesheets.skip(pageSize*(page - 1))
 
+        return timesheets
+
     def get_by_id(request_id):
         return db_timesheet_update_request.find_one({'RequestId': request_id})
 

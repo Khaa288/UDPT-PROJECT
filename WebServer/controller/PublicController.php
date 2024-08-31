@@ -1,7 +1,8 @@
-<?php 
+<?php
 class PublicController
 {
-    public function login(){
+    public function login()
+    {
         require("./api/Endpoints.php");
 
         $api = $login_api;
@@ -18,19 +19,14 @@ class PublicController
 
             if ($response->Role == 'Manager') {
                 $VIEW = "./view/ManagerDashboard.phtml";
-            }
-
-            else if ($response->Role == 'Employee') {
+            } else if ($response->Role == 'Employee') {
                 $VIEW = "./view/EmployeeDashboard.phtml";
-            }
-            
-            else {
+            } else {
                 $VIEW = "./view/EmployeeDashboard.phtml";
             }
 
             require("./template/Layout.phtml");
-        }
-        else {
+        } else {
             PublicController::toLogin();
         }
     }
@@ -41,16 +37,18 @@ class PublicController
         require("./template/Layout.phtml");
     }
 
-    public function toLogin() {
+    public function toLogin()
+    {
         $VIEW = "./view/LoginPage.phtml";
         require($VIEW);
     }
 
-    public function toProfileManagement() {
+    public function toProfileManagement()
+    {
         require("./api/Endpoints.php");
 
         $pages = ApiRequest::get($get_profiles_pages_api, null);
-        
+
         $profiles = ApiRequest::get($get_profiles_api, array(
             'page' => $_GET["page"],
             'pageSize' => $_GET["pageSize"]
@@ -60,7 +58,8 @@ class PublicController
         require("./template/Layout.phtml");
     }
 
-    public function toProfile() {
+    public function toProfile()
+    {
         require("./api/Endpoints.php");
 
         $api = $get_profile_by_id_api;
@@ -68,42 +67,42 @@ class PublicController
         if (isset($_SESSION["AuthUser"])) {
             $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
 
-            $profile = ApiRequest::get($api.$employee_id, null, null);
+            $profile = ApiRequest::get($api . $employee_id, null, null);
             $VIEW = "./view/ProfileManagement/EmployeeProfile.phtml";
 
             require("./template/Layout.phtml");
-        }
-        else {
+        } else {
             PublicController::toLogin();
         }
     }
 
-    public function toAttendance() {
+    public function toAttendance()
+    {
         require("./api/Endpoints.php");
 
         if (isset($_SESSION["AuthUser"])) {
             $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
 
-            $checkInInfo = ApiRequest::get($get_employee_current_attendance_api.$employee_id.'/current', null, null);
-            $employee = ApiRequest::get($get_profile_by_id_api.$employee_id, null, null);
+            $checkInInfo = ApiRequest::get($get_employee_current_attendance_api . $employee_id . '/current', null, null);
+            $employee = ApiRequest::get($get_profile_by_id_api . $employee_id, null, null);
 
             $attendance_employee = array(
                 'EmployeeId' => $employee->EmployeeId,
-                'EmployeeName' => $employee->FirstName.'&nbsp;'.$employee->MiddleName.'&nbsp;'.$employee->LastName,
+                'EmployeeName' => $employee->FirstName . '&nbsp;' . $employee->MiddleName . '&nbsp;' . $employee->LastName,
                 'EmployeeIdCardNum' => $employee->IdCardNum,
                 'EmployeeJobTitle' => $employee->JobTitle
             );
-            
+
             $VIEW = "./view/ProfileManagement/Attendance.phtml";
 
             require("./template/Layout.phtml");
-        }
-        else {
+        } else {
             PublicController::toLogin();
         }
     }
 
-    public function toTimesheet() {
+    public function toTimesheet()
+    {
         require("./api/Endpoints.php");
 
         $pages = ApiRequest::get($get_timesheet_pages_api, null);
@@ -117,12 +116,23 @@ class PublicController
         require("./template/Layout.phtml");
     }
 
-    public function toTimesheetRequest() {
-        $VIEW = "./view/TimesheetManagement/ListTimesheets.phtml";
+    public function toTimesheetRequest()
+    {
+        require("./api/Endpoints.php");
+
+        $pages = ApiRequest::get($get_timesheet_update_request_pages_api, null);
+
+        $timesheet_update_requests = ApiRequest::get($get_timesheet_update_requests_api, array(
+            'page' => $_GET["page"],
+            'pageSize' => $_GET["pageSize"]
+        ));
+
+        $VIEW = "./view/TimesheetManagement/ListTimesheetRequests.phtml";
         require("./template/Layout.phtml");
     }
 
-    public function toLeave() {
+    public function toLeave()
+    {
         require("./api/Endpoints.php");
 
         $pages = ApiRequest::get($get_leave_pages_api, null);
@@ -136,7 +146,8 @@ class PublicController
         require("./template/Layout.phtml");
     }
 
-    public function toLeaveRequest() {
+    public function toLeaveRequest()
+    {
         require("./api/Endpoints.php");
 
         $pages = ApiRequest::get($get_leave_request_pages_api, null);
@@ -150,7 +161,8 @@ class PublicController
         require("./template/Layout.phtml");
     }
 
-    public function toWFH() {
+    public function toWFH()
+    {
         require("./api/Endpoints.php");
 
         $pages = ApiRequest::get($get_wfh_pages_api, null);
@@ -164,7 +176,8 @@ class PublicController
         require("./template/Layout.phtml");
     }
 
-    public function toWFHRequest() {
+    public function toWFHRequest()
+    {
         require("./api/Endpoints.php");
 
         $pages = ApiRequest::get($get_wfh_request_pages_api, null);
@@ -178,4 +191,3 @@ class PublicController
         require("./template/Layout.phtml");
     }
 }
-?>

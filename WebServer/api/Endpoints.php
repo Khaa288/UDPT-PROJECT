@@ -36,4 +36,7 @@
     $get_timesheet_pages_api = $url.'/timesheet/page';
     $get_timesheet_update_request_pages_api = $url.'/timesheet/request/page';
     $get_timesheet_by_id_api = $url.'/timesheet/';
+    $update_timesheet_by_id_api = $url.'/timesheet/'; 
+    $accept_update_timesheet_api = $url.'/timesheet/request/'; 
+    $deny_update_timesheet_api = $url.'/timesheet/request/'; 
 ?>

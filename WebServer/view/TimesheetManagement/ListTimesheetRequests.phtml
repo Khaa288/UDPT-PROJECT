@@ -1,0 +1,65 @@
+<!-- Navigation Bar -->
+<div class="profile-management-nav-bar">
+    <div class="container d-flex justify-content-end py-3">
+        <a href="index.php?action=timesheet-management&page=1&pageSize=5" class="mx-1 nav-link">Timesheet</a>
+        <a href="" class="mx-1 nav-link active">Request</a>
+    </div>
+</div>
+
+
+<!-- Header Section -->
+<header class="bg-light text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Timesheet Management</h1>
+        <p class="lead">View, add, edit, and manage profile information.</p>
+    </div>
+</header>
+
+<!-- Employee Table Section -->
+<section class="profile-management py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between mb-4">
+            <h2 class="mb-0">Timesheet Updates Request List</h2>
+        </div>
+
+        <!-- Employee Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped text-nowrap table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Date</th>
+                        <th>New work hour</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($timesheet_update_requests as $timesheet_update_request): ?>
+                    <tr>
+                        <td><?php echo $timesheet_update_request->Employee->EmployeeName?></td>
+                        <td>
+                            <?php echo $timesheet_update_request->Date ?>
+                        </td>
+                        <td><?php echo $timesheet_update_request->NewWorkHour?></td>
+                        <td><?php echo $timesheet_update_request->Note?></td>
+                        <td>
+                            <a href = <?php echo 'index.php?action=accept-timesheet-update&requestId='.$timesheet_update_request->RequestId; ?> class="btn btn-primary btn-sm">
+                                Accept
+                            </a>
+                            <a href = <?php echo 'index.php?action=deny-timesheet-update&requestId='.$timesheet_update_request->RequestId; ?> class="btn btn-danger btn-sm" >
+                                Deny
+                            </a>
+                        </td>
+                    </tr>
+                    <?php endforeach?>
+                </tbody>
+            </table>
+        </div>
+
+        <?php
+            $action_url = 'index.php?action=timesheet-request-management';
+            require('./include/Paginationbar.phtml')
+        ?>
+    </div>
+</section>

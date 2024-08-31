@@ -1,7 +1,5 @@
 <?php
-require("TimesheetUpdateModal.phtml");
 require('./util/Calendar.php');
-
 $calendar = new Calendar();
 $calendar->setYear($timesheet->Year);
 $calendar->setMonthNumber($timesheet->Month);
@@ -11,7 +9,7 @@ $calendar->create();
 <!-- Timesheet Header Section -->
 <header class="bg-light text-center py-4">
     <div class="container">
-        <h2 class="mb-0">Timesheet for [Employee Name]</h2>
+        <h2 class="mb-0">Timesheet for <?php echo $timesheet->Employee->EmployeeName ?></h2>
     </div>
 </header>
 
@@ -20,7 +18,7 @@ $calendar->create();
     <div class="container">
         <!-- Timesheet Period Selector -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="text-muted mb-0">Timesheet Period</h5>
+            <h5 class="text-muted mb-0">Timesheet Period: <?php echo $timesheet->Month.'-'.$timesheet->Year?></h5>
         </div>
 
         <!-- Timesheet Table -->
@@ -37,39 +35,60 @@ $calendar->create();
                 </thead>
 
                 <tbody>
-                    <?php foreach($calendar->getWeeks() as $week):?>
-                        <tr>
-                            <?php foreach($week as $day_number):?>
-                                <?php if ($day_number != ''): ?>
-                                    <td data-bs-toggle="modal" data-bs-target=<?php echo '#updateTimesheetModal' ?> class"lk">
-                                        <?php echo $day_number?>
-                                    </td>
-                                <?php else: ?>
-                                    <td><?php echo $day_number?></td>
-                                <?php endif?>
-                            <?php endforeach?>
+                    <?php
+                        foreach ($calendar->getWeeks() as $week) {
+                            echo '<tr>';
+                            foreach($week as $day_number) {
+                                
+                                if ($day_number != '') {
+                                    // Get Day month year format to compare with db
+                                    $day = $day_number < 10 ? '0'.$day_number : $day_number; 
+                                    $month = $timesheet->Month < 10 ? '0'.$timesheet->Month : $timesheet->Month;
+                                    $year = $timesheet->Year; 
+                                    $day_month_year = $day.'-'.$month.'-'.$year;
 
-                            <!-- Print the remaining white spaces -->
-                            <?php
-                                $count = count($week);
-                                while(7 - $count > 0) {
-                                    echo "<td></td>";
-                                    $count++;
+                                    // Get column in object workDates array to find 
+                                    $work_days = array_column($timesheet->WorkDates, 'Date'); 
+
+                                    // If value found -> Asign to UI
+                                    $work_day_index = array_search($day_month_year, $work_days);
+                                    if ($work_day_index !== false) {
+                                        $work_hour = $timesheet->WorkDates[$work_day_index]->WorkHour;
+                                    }
+
+                                    // If not -> work day doesnt exist
+                                    else {
+                                        $work_hour = '0';
+                                    }
+
+                                    require("TimesheetUpdateModal.phtml");
+                                    echo '
+                                        <td data-bs-toggle="modal" data-bs-target="#updateTimesheetModal'.$day_month_year.'">
+                                            '.$day.'-'.$month.': <b>'.$work_hour.'h</b>
+                                        </td>
+                                    ';
                                 }
-                            ?>
-                        </tr>
-                    <?php endforeach?>
+
+                                else {
+                                    echo '<td>'.$day_number.'</td>';
+                                }
+                               
+                            }
+
+                            $count = count($week);
+                            while(7 - $count > 0) {
+                                echo "<td></td>";
+                                $count++;
+                            }
+                            echo '</tr>';
+                        }
+                    ?>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="d-flex justify-content-between p-3">
-        <a href="index.php?action=timesheet-management" class="btn btn-secondary">Back</a>
-        <a class="btn btn-primary">Save changes</a>
+    <div class="d-flex justify-content-end p-3">
+        <a href="index.php?action=timesheet-management&page=1&pageSize=5" class="btn btn-success">Apply changes</a>
     </div>
 </section>
-
-<script>
-    $(".timesheet-detail .container .table-responsive table tbody tr > td").addClass("tesst");
-</script>
