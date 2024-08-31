@@ -40,7 +40,12 @@ class LeaveRequest():
         page = int(params['page'])
         pageSize = int(params['pageSize'])
 
-        leave_requests = db_leave_request.find({'Status': RequestStatus.PENDING}).limit(pageSize)
+        leave_filter = {'Status': RequestStatus.PENDING}
+
+        if params['employeeId'] is not None and params['employeeId'] != 'None':
+            leave_filter['Employee.EmployeeId'] = int(params['employeeId'])
+
+        leave_requests = db_leave_request.find(leave_filter).limit(pageSize)
         leave_requests = leave_requests.skip(pageSize*(page - 1))
 
         return leave_requests

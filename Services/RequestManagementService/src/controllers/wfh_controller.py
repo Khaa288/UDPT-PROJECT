@@ -30,7 +30,8 @@ def get_wfh_request_pages():
 def list_wfh_requests():
     params = {
         "page": request.args.get('page'),
-        "pageSize": request.args.get('pageSize')
+        "pageSize": request.args.get('pageSize'),
+        "employeeId": request.args.get('employeeId')
     }
 
     return json.loads(json_util.dumps(WfhRequest.get_all(params)))

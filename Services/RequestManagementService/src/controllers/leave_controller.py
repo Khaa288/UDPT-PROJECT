@@ -35,7 +35,8 @@ def get_leave_request_pages():
 def list_leave_requests():
     params = {
         "page": request.args.get('page'),
-        "pageSize": request.args.get('pageSize')
+        "pageSize": request.args.get('pageSize'),
+        "employeeId": request.args.get('employeeId')
     }
 
     leave_requests = LeaveRequest.get_all(params)
