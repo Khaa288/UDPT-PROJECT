@@ -12,13 +12,18 @@ timesheet = Blueprint("timesheet", __name__)
 
 @timesheet.route('/page', methods = ["GET"])
 def get_timesheet_pages():
-    return jsonify(Timesheet.get_pages())
+    params = {
+        "employeeId": request.args.get('employeeId')
+    }
+
+    return jsonify(Timesheet.get_pages(params))
 
 @timesheet.route('', methods = ["GET"])
 def list_timesheets():
     params = {
         "page": request.args.get('page'),
-        "pageSize": request.args.get('pageSize')
+        "pageSize": request.args.get('pageSize'),
+        "employeeId": request.args.get('employeeId')
     }
 
     timesheets = Timesheet.get_all(params)

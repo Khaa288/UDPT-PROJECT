@@ -22,17 +22,29 @@ class Timesheet():
         self.Month = month
         self.Year = year
 
-    def get_pages(page_size = 5):
-        if db_timesheet.count_documents({}) <= page_size:
+    def get_pages(params, page_size = 5):
+        request_filter = {}
+
+        if params['employeeId'] is not None and params['employeeId'] != 'None':
+            request_filter['Employee.EmployeeId'] = int(params['employeeId'])
+
+        document_nums = db_timesheet.count_documents(request_filter)
+
+        if document_nums <= page_size:
             return 1
 
-        return  math.ceil(db_timesheet.count_documents({}) / page_size)
+        return  math.ceil(document_nums / page_size)
 
     def get_all(params):
         page = int(params['page'])
         pageSize = int(params['pageSize'])
 
-        timesheets = db_timesheet.find().limit(pageSize)
+        request_filter = {}
+
+        if params['employeeId'] is not None and params['employeeId'] != 'None':
+            request_filter['Employee.EmployeeId'] = int(params['employeeId'])
+
+        timesheets = db_timesheet.find(request_filter).limit(pageSize)
         timesheets = timesheets.skip(pageSize*(page - 1))
 
         return timesheets

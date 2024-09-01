@@ -214,9 +214,15 @@ def deny_wfh(request_id):
 # TIMESHEET ROUTE
 @timesheet.route('/page', methods = ["GET"])
 def get_timesheet_pages():
+    params = {
+        "employeeId": request.args.get('employeeId')
+    }
+
+    params = urllib.parse.urlencode(params)
+
     res = eureka_client.do_service(
         app_name = "request_management_service", 
-        service = f"/api/timesheet/page", 
+        service = f"/api/timesheet/page?{params}", 
         method="GET",
         headers=({"Content-Type": "application/json"})
     )
@@ -227,7 +233,8 @@ def get_timesheet_pages():
 def list_timesheets():
     params = {
         "page": request.args.get('page'),
-        "pageSize": request.args.get('pageSize')
+        "pageSize": request.args.get('pageSize'),
+        "employeeId": request.args.get('employeeId')
     }
 
     params = urllib.parse.urlencode(params)
