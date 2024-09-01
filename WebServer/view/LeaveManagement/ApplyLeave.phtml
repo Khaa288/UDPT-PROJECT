@@ -1,0 +1,83 @@
+<div class="profile-management-nav-bar">
+    <div class="container d-flex justify-content-end py-3">
+        <a href="" class="mx-1 nav-link active">Apply</a>
+        <a href="index.php?action=employee-leave-request-management&page=1&pageSize=5" class="mx-1 nav-link">Requests</a>
+    </div>
+</div>
+
+<div class="container-fluid p-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title mb-4">Apply Leave</h5>
+            <hr>
+            <form id="applyForm" method="post" action="index.php?action=leave-apply">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="fromDate" class="form-label">From Date*</label>
+                            <input type="date" class="form-control" id="fromDate" placeholder="dd-mm-yyy" name="fromDate">
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="toDate" class="form-label">To Date*</label>
+                            <input type="date" class="form-control" id="toDate" placeholder="dd-mm-yyy" name="toDate">
+                            <p class="text-danger p-2" id="toDateError"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end p-2 d-flex fw-medium justify-content-end">
+                    <p>Leave Duration:&nbsp;</p>
+                    <p id="duration">0</p>
+                    <p>&nbsp;Day(s)</p>
+                </div>
+                <div class="mb-3">
+                    <label for="comments" class="form-label">Note</label>
+                    <textarea class="form-control" id="comments" rows="3" placeholder="Type your notes here" name="note"></textarea>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success" id="applyBtn">Apply</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getDuration(date1, date2) {
+        date1 = new Date(date1);
+        date2 = new Date(date2);
+
+        let Difference_In_Time = date2.getTime() - date1.getTime();
+        let duration = Math.round(Difference_In_Time / (1000 * 3600 * 24));
+
+        return duration;
+    }
+
+    // Handle ToDate input > FromDate
+    $('#toDate').on('input', function() {
+        var fromDate = $('#fromDate').val()
+        var toDate = $(this).val()
+
+        var duration = getDuration(fromDate, toDate)
+
+        if (fromDate > toDate) {
+            $('#toDateError').text('To date should be after from date')
+        } else {
+            $('#toDateError').text('')
+            $('#duration').text(duration)
+            $('#duration').val(duration)
+        }
+    })
+
+    // Prevene form submit if error
+    $('#applyForm').on('submit', function() {
+        if ($('#duration').val() <= 0) {
+            $('#toDateError').text('To date should be after from date')
+            event.preventDefault()
+        } else {
+            $('#toDateError').text('')
+        }
+    })
+</script>

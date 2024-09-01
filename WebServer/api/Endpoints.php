@@ -1,6 +1,6 @@
 <?php
     $gateway_host = 'http://127.0.0.1';
-    $gateway_port = '3001';
+    $gateway_port = '5000';
     $url = $gateway_host.':'.$gateway_port.'/api';
 
     $login_api = $url.'/auth/login';
@@ -39,4 +39,5 @@
     $update_timesheet_by_id_api = $url.'/timesheet/'; 
     $accept_update_timesheet_api = $url.'/timesheet/request/'; 
     $deny_update_timesheet_api = $url.'/timesheet/request/'; 
+    $request_update_timesheet_api = $url.'/timesheet/request';
 ?>

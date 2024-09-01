@@ -105,12 +105,32 @@ class PublicController
     {
         require("./api/Endpoints.php");
 
-        $pages = ApiRequest::get($get_timesheet_pages_api, null);
+        $role = json_decode($_SESSION["AuthUser"])->Role;
 
-        $timesheets = ApiRequest::get($get_timesheets_api, array(
-            'page' => $_GET["page"],
-            'pageSize' => $_GET["pageSize"]
-        ));
+        if ($role == 'Employee') {
+            $pages = ApiRequest::get($get_timesheet_pages_api, array(
+                'employeeId' => json_decode($_SESSION["AuthUser"])->EmployeeId
+            ));
+
+            $timesheets = ApiRequest::get($get_timesheets_api, array(
+                'page' => $_GET["page"],
+                'pageSize' => $_GET["pageSize"],
+                'employeeId' => json_decode($_SESSION["AuthUser"])->EmployeeId
+            ));
+        }
+
+        else if ($role == 'Manager') {
+            $pages = ApiRequest::get($get_timesheet_pages_api, null);
+
+            $timesheets = ApiRequest::get($get_timesheets_api, array(
+                'page' => $_GET["page"],
+                'pageSize' => $_GET["pageSize"]
+            ));
+        }
+
+        else {
+            PublicController::toLogin();
+        }
 
         $VIEW = "./view/TimesheetManagement/ListTimesheets.phtml";
         require("./template/Layout.phtml");
@@ -181,6 +201,12 @@ class PublicController
         require("./template/Layout.phtml");
     }
 
+    public function toApplyLeave()
+    {
+        $VIEW = "./view/LeaveManagement/ApplyLeave.phtml";
+        require("./template/Layout.phtml");
+    }
+
     public function toWFH()
     {
         require("./api/Endpoints.php");
@@ -228,6 +254,11 @@ class PublicController
         ));
 
         $VIEW = "./view/WFHManagement/ListEmployeeWFHRequests.phtml";
+        require("./template/Layout.phtml");
+    }
+
+    public function toApplyWFH() {
+        $VIEW = "./view/WFHManagement/ApplyWFH.phtml";
         require("./template/Layout.phtml");
     }
 }

@@ -18,10 +18,16 @@ switch ($action) {
         $controller = new PublicController();
         $controller->login();
         break;
+    case "logout":
+        unset($_SESSION["AuthUser"]);  
+        $controller = new PublicController();
+        $controller->toLogin();
+        break;
     case "home":
         $controller = new PublicController();
         $controller->toHome();
         break;
+    
     case "attendance":
         $controller = new PublicController();
         $controller->toAttendance();
@@ -34,6 +40,7 @@ switch ($action) {
         $controller = new AttendanceController();
         $controller->checkOut();
         break;   
+    
     case "profile-management":
         $controller = new PublicController();
         $controller->toProfileManagement();
@@ -55,6 +62,14 @@ switch ($action) {
         $controller = new PublicController();
         $controller->toEmployeeLeaveRequest();
         break;
+    case "employee-apply-leave":
+        $controller = new PublicController();
+        $controller->toApplyLeave();
+        break;
+    case "leave-apply":
+        $controller = new LeaveController();
+        $controller->applyLeave();
+        break;
     case "leave-request-management":
         $controller = new PublicController();
         $controller->toLeaveRequest();
@@ -71,14 +86,18 @@ switch ($action) {
         $controller = new LeaveController();
         $controller->denyLeave();
         break;
-    case "request-leave":
-        $controller = new LeaveController();
-        $controller->acceptLeave();
-        break;
 
     case "employee-wfh-request-management":
         $controller = new PublicController();
         $controller->toEmployeeWFHRequest();
+        break;
+    case "employee-apply-wfh":
+        $controller = new PublicController();
+        $controller->toApplyWFH();
+        break;
+    case "wfh-apply":
+        $controller = new WfhController();
+        $controller->applyWfh();
         break;
     case "wfh-management":
         $controller = new PublicController();
@@ -95,10 +114,6 @@ switch ($action) {
     case "deny-wfh":
         $controller = new WfhController();
         $controller->denyWfh();
-        break;
-    case "request-wfh":
-        $controller = new WfhController();
-        $controller->requestWfh();
         break;
     
     case "timesheet-management":
@@ -131,7 +146,6 @@ switch ($action) {
         break;
 
     default:
-        unset($_SESSION["AuthUser"]);  
         $controller = new PublicController();
         $controller->toLogin();
 }

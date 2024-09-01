@@ -1,0 +1,78 @@
+<div class="profile-management-nav-bar">
+    <div class="container d-flex justify-content-end py-3">
+        <a href="" class="mx-1 nav-link active">Apply</a>
+        <a href="index.php?action=employee-wfh-request-management&page=1&pageSize=5" class="mx-1 nav-link">Requests</a>
+    </div>
+</div>
+
+<div class="container-fluid p-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title mb-4">Apply WFH</h5>
+            <hr>
+            <form id="applyForm" method="post" action="index.php?action=wfh-apply">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date*</label>
+                            <input type="date" class="form-control" id="date" placeholder="dd-mm-yyy" name="date">
+                            <p class="text-danger p-2" id="dateError"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="wfhType" class="form-label">WFH Type*</label>
+                            <select class="form-select" id="wfhType" name="wfhType">
+                                <option value="">-- Select --</option>
+                                <option value="1">One Day</option>
+                                <option value="2">Half Day</option>
+                            </select>
+                            <p class="text-danger p-2" id="wfhTypeError"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="comments" class="form-label">Note</label>
+                    <textarea class="form-control" id="comments" rows="3" placeholder="Type your notes here" name="note"></textarea>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success" id="applyBtn">Apply</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // On submit handle
+    $('#applyForm').on('submit', function() {
+        if (!$('#date').val()) {
+            $('#dateError').text('Date is required')
+            event.preventDefault()
+        }
+
+        if (!$('#wfhType').val()) {
+            $('#wfhTypeError').text('WFH Type is required')
+            event.preventDefault()
+        }
+    });
+
+    // Input handle
+    $('#date').on('input', function() {
+        if (!$(this).val()) {
+            $('#dateError').text('Date is required')
+        }
+        else {
+            $('#dateError').text('')
+        }
+    })
+
+    $('#wfhType').on('input', function() {
+        if (!$(this).val()) {
+            $('#wfhTypeError').text('WFH Type is required')
+        }
+        else {
+            $('#wfhTypeError').text('')
+        }
+    })
+</script>

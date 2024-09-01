@@ -1,0 +1,72 @@
+<!-- Modal -->
+<div class="modal fade" id=<?php echo 'requestUpdateModal' . $day_month_year ?> tabindex="-1" aria-labelledby=<?php echo 'requestUpdateModalLabel' . $day_month_year ?> aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id=<?php echo 'requestUpdateModalLabel' . $day_month_year ?>>
+          <?php
+          echo $day_month_year
+          ?>
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form
+        method="post"
+        action=<?php echo 'index.php?action=request-update-timesheet&timesheetId=' . $timesheet->TimesheetId ?>
+        id=<?php echo 'requestNewWorkHour' . $day_month_year . 'Submit' ?>>
+        <div class="modal-body">
+          <div class="d-flex justify-content-between">
+            <p>Enter new work hour* <b>(0-12)</b></p>
+            <input type="text" class="form-control form-control-sm requestNewWorkHour" id=<?php echo 'requestNewWorkHour' . $day_month_year ?> name="requestNewWorkHour">
+            <input type="text" class="form-control form-control-sm" id="date" name="date" value=<?php echo $day_month_year ?> hidden>
+          </div>
+          <p id=<?php echo 'requestNewWorkHour' . $day_month_year . 'Error' ?> class="text-danger d-flex justify-content-center pt-3 pe-5"></p>
+
+          <div class="d-flex justify-content-between">
+            <p>Enter note for new work hour</p>
+            <input type="text" class="form-control form-control-sm" name="note">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" id="submitBtn">Request Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  var inputs = $('.requestNewWorkHour');
+
+  $(inputs).each(function() {
+    var inputId = '#' + $(this).attr('id');
+    var errorId = inputId + 'Error';
+    var formId = inputId + 'Submit';
+
+    // Display error if input not number
+    $(inputId).on('input', function() {
+      var inputValue = $(this).val();
+      console.log(inputId, inputValue);
+
+      // Check if the input value is an integer
+      if ($.isNumeric(inputValue) || inputValue == '') {
+        $(errorId).text('');
+      } else {
+        $(errorId).text('Input is not an integer.');
+      }
+    });
+
+    // Prevent submit form 
+    $(formId).on('submit', function(event) {
+      var inputValue = $(inputId).val();
+
+      // Check if the input value is an integer
+      if (!$.isNumeric(inputValue)) {
+        event.preventDefault();
+      }
+    })
+  });
+</script>

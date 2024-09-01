@@ -4,6 +4,9 @@ $calendar = new Calendar();
 $calendar->setYear($timesheet->Year);
 $calendar->setMonthNumber($timesheet->Month);
 $calendar->create();
+
+$role = json_decode($_SESSION["AuthUser"])->Role;
+$modal = $role == 'Manager' ? '#updateTimesheetModal' : '#requestUpdateModal';
 ?>
 
 <!-- Timesheet Header Section -->
@@ -18,7 +21,7 @@ $calendar->create();
     <div class="container">
         <!-- Timesheet Period Selector -->
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="text-muted mb-0">Timesheet Period: <?php echo $timesheet->Month.'-'.$timesheet->Year?></h5>
+            <h5 class="text-muted mb-0">Timesheet Period: <?php echo $timesheet->Month . '-' . $timesheet->Year ?></h5>
         </div>
 
         <!-- Timesheet Table -->
@@ -26,7 +29,7 @@ $calendar->create();
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <?php foreach($calendar->getWeekDays() as $day_name): ?>
+                        <?php foreach ($calendar->getWeekDays() as $day_name): ?>
                             <th>
                                 <?php echo $day_name; ?>
                             </th>
@@ -36,52 +39,68 @@ $calendar->create();
 
                 <tbody>
                     <?php
-                        foreach ($calendar->getWeeks() as $week) {
-                            echo '<tr>';
-                            foreach($week as $day_number) {
-                                
-                                if ($day_number != '') {
-                                    // Get Day month year format to compare with db
-                                    $day = $day_number < 10 ? '0'.$day_number : $day_number; 
-                                    $month = $timesheet->Month < 10 ? '0'.$timesheet->Month : $timesheet->Month;
-                                    $year = $timesheet->Year; 
-                                    $day_month_year = $day.'-'.$month.'-'.$year;
+                    foreach ($calendar->getWeeks() as $week) {
+                        echo '<tr>';
+                        foreach ($week as $day_number) {
 
-                                    // Get column in object workDates array to find 
-                                    $work_days = array_column($timesheet->WorkDates, 'Date'); 
+                            if ($day_number != '') {
+                                // Get Day month year format to compare with db
+                                $day = $day_number < 10 ? '0' . $day_number : $day_number;
+                                $month = $timesheet->Month < 10 ? '0' . $timesheet->Month : $timesheet->Month;
+                                $year = $timesheet->Year;
+                                $day_month_year = $day . '-' . $month . '-' . $year;
 
-                                    // If value found -> Asign to UI
-                                    $work_day_index = array_search($day_month_year, $work_days);
-                                    if ($work_day_index !== false) {
-                                        $work_hour = $timesheet->WorkDates[$work_day_index]->WorkHour;
-                                    }
+                                // Get column in object workDates array to find 
+                                $work_days = array_column($timesheet->WorkDates, 'Date');
 
-                                    // If not -> work day doesnt exist
-                                    else {
-                                        $work_hour = '0';
-                                    }
+                                // If value found -> Asign to UI
+                                $work_day_index = array_search($day_month_year, $work_days);
+                                if ($work_day_index !== false) {
+                                    $work_hour = $timesheet->WorkDates[$work_day_index]->WorkHour;
 
                                     require("TimesheetUpdateModal.phtml");
-                                    echo '
-                                        <td data-bs-toggle="modal" data-bs-target="#updateTimesheetModal'.$day_month_year.'">
-                                            '.$day.'-'.$month.': <b>'.$work_hour.'h</b>
-                                        </td>
-                                    ';
+                                    require("RequestUpdateModal.phtml");
+
+                                    // Work Hour = 0 -> Leave
+                                    if ($work_hour == 0) {
+                                        echo '
+                                                <td data-bs-toggle="modal" data-bs-target="' . $modal . $day_month_year . '">
+                                                    ' . $day . '-' . $month . ': <b class="text-warning">Leave</b>
+                                                </td>
+                                            ';
+                                    } else {
+                                        echo '
+                                            <td data-bs-toggle="modal" data-bs-target="' . $modal . $day_month_year . '">
+                                                ' . $day . '-' . $month . ': <b>' . $work_hour . 'h</b>
+                                            </td>
+                                        ';
+                                    }
                                 }
 
+                                // If not -> work day doesnt exist
                                 else {
-                                    echo '<td>'.$day_number.'</td>';
-                                }
-                               
-                            }
+                                    $work_hour = '0';
 
-                            $count = count($week);
-                            while(7 - $count > 0) {
-                                echo "<td></td>";
-                                $count++;
+                                    require("TimesheetUpdateModal.phtml");
+                                    require("RequestUpdateModal.phtml");
+                                    echo '
+                                            <td data-bs-toggle="modal" data-bs-target="' . $modal . $day_month_year . '">
+                                                <b class="text-danger">MT</b>
+                                            </td>
+                                        ';
+                                }
+                            } else {
+                                echo '<td>' . $day_number . '</td>';
                             }
-                            echo '</tr>';
                         }
+
+                        $count = count($week);
+                        while (7 - $count > 0) {
+                            echo "<td></td>";
+                            $count++;
+                        }
+                        echo '</tr>';
+                    }
                     ?>
                 </tbody>
             </table>
