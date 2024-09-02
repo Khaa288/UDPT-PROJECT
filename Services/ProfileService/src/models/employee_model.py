@@ -32,7 +32,7 @@ class Employee(db.Model):
 
     def get_all(params):
         # All filter are null -> return all records
-        if params['firstName'] is None and params['firstName'] is None and params['firstName'] is None:
+        if params['firstName'] is None and params['idCardNum'] is None and params['jobTitle'] is None:
             employees = db.session.query(Employee)
 
         else:
