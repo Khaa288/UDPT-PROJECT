@@ -2,6 +2,7 @@ from flask import jsonify, request, Response, json, Blueprint
 from marshmallow import ValidationError
 from src.models.employee_model import Employee
 from src.dtos.employee_request_dto import EmployeeUpdateRequestDto
+from src.messages.publisher import publish_message
 
 # user controller blueprint to be registered with api blueprint
 employee = Blueprint("employee", __name__)
@@ -35,6 +36,14 @@ def update(employee_id):
     
     try:
         validated_body = dto.load(request_body)
+        
+        # Publish message to broker
+        message = validated_body
+        message["EmployeeId"] = employee_id
+        message = json.dumps(message)
+        publish_message(message=message, event='EmployeeUpdated')
+
+        # update in database
         Employee.update(employee_id, validated_body)
        
     except ValidationError as err:
