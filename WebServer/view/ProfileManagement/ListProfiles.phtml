@@ -45,19 +45,19 @@
                 <div class="col">
                     <div>
                         <p class="fs-6 fw-medium">Employee Name</p>
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="firstName">
                     </div>
                 </div>
                 <div class="col">
                     <div>
                         <p class="fs-6 fw-medium">Id Number</p>
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="idCardNum">
                     </div>
                 </div>
                 <div class="col">
                     <div>
                         <p class="fs-6 fw-medium">Job Title</p>
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="jobTitle">
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody">
                     <?php foreach ($profiles as $profile): ?>
                         <?php
                         require("./view/ProfileManagement/EditProfileModal.phtml");
@@ -109,8 +109,62 @@
         </div>
 
         <?php
-            $action_url = 'index.php?action=profile-management';
-            require('./include/Paginationbar.phtml')
+        $action_url = 'index.php?action=profile-management';
+        require('./include/Paginationbar.phtml')
         ?>
     </div>
 </section>
+
+<div id="output"></div>
+
+<script>
+    $('#firstName, #idCardNum, #jobTitle').each(function() {
+        var searchType = $(this);
+
+        searchType.on('input', function() {
+            var url = "http://127.0.0.1:5000/api/employee?page=1&pageSize=5";
+            var searchValue = $(this).val();
+            var param = '';
+
+            if (searchValue) {
+                param = `&${$(this).attr('id')}=` + searchValue;
+            }
+
+            url += param;
+            console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                success: function(data, status, jqXHR) {
+                    data = JSON.parse(data);
+                    console.log('OK')
+                    $("#tbody").html('');
+
+                    for (var value in data) {
+                        var newRow = `
+                        <tr>
+                            <td>${data[value].FirstName}</td>
+                            <td>${data[value].MiddleName}</td>
+                            <td>${data[value].LastName}</td>
+                            <td>${data[value].IdCardNum}</td>
+                            <td>${data[value].JobTitle}</td>
+
+                            <td>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target='#editProfile${data[value].EmployeeId}Modal'>
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deactivateEmployeeModal">
+                                    <i class="bi bi-archive"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `
+                        $('#tbody').append(newRow);
+                    }
+                }
+            });
+        })
+    })
+</script>
