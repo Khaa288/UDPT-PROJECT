@@ -1,0 +1,31 @@
+<div class="modal fade" id=<?php echo 'voucherDetailModal' . $gift->detail[0]->id ?> tabindex="-1" aria-labelledby=<?php echo 'voucherDetailModalLabel' . $gift->detail[0]->id ?> aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id=<?php echo 'voucherDetailModalLabel' . $gift->detail[0]->id ?>>
+                    Detail No: <?php echo $gift->detail[0]->id ?>
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form action="index.php?action=collect-voucher" method="post">
+                <div class="modal-body">
+                    <p class="fw-bold">Brand: </p>
+                    <p><?php echo isset($gift->brand->title) ? $gift->brand->title : 'Unknown'; ?></p>
+                    <p class="fw-bold">Detail: </p>
+                    <ul>
+                        <li class="fw-medium"><?php echo $gift->name ?></li>
+                        <li>Quantity: <?php echo $gift->detail[0]->code_quantity ?></li>
+                        <li>Price: <?php echo $gift->detail[0]->price_format ?></li>
+                    </ul>
+                    <input type="text" name="brandId" value=<?php echo isset($gift->brand->id) ? $gift->brand->id : "0"; ?> hidden>
+                    <input type="text" name="giftId" value=<?php echo $gift->detail[0]->id; ?> hidden>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Collect</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

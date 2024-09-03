@@ -6,6 +6,7 @@ require_once("./controller/TimesheetController.php");
 require_once("./controller/LeaveController.php");
 require_once("./controller/WfhController.php");
 require_once("./controller/AttendanceController.php");
+require_once("./controller/RewardController.php");
 require_once("./api/ApiRequest.php");
 
 $action = "";
@@ -143,6 +144,27 @@ switch ($action) {
     case "deny-timesheet-update":
         $controller = new TimesheetController();
         $controller->denyUpdateRequest();
+        break;
+
+    case "reward-management":
+        $controller = new PublicController();
+        $controller->toVouchers();
+        break;
+    case "my-reward-management":
+        $controller = new PublicController();
+        $controller->toMyVouchers();
+        break;
+    case "collect-voucher":
+        $controller = new RewardController();
+        $controller->collectVoucher();
+        break;
+    case "to-send-point":
+        $controller = new PublicController();
+        $controller->toSendPoint();
+        break;
+    case "send-point":
+        $controller = new RewardController();
+        $controller->sendPoint();
         break;
 
     default:

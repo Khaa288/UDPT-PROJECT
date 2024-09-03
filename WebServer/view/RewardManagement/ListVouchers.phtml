@@ -1,0 +1,49 @@
+<!-- Navigation Bar -->
+<div class="profile-management-nav-bar">
+    <div class="container d-flex justify-content-end py-3">
+        <div class="dropdown mx-1">
+            <a href="#" class="nav-link dropdown-toggle active" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Vouchers
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="voucherDropdown">
+                <li><a class="dropdown-item" href="">Vouchers</a></li>
+                <li><a class="dropdown-item" href="index.php?action=my-reward-management">My Vouchers</a></li>
+            </ul>
+        </div>
+        <a href="index.php?action=to-send-point" class="mx-1 nav-link">Send point</a>
+    </div>
+</div>
+
+
+<!-- Header Section -->
+<header class="bg-light text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Reward Management</h1>
+        <p class="lead">Your current points 1000000000</p>
+    </div>
+</header>
+
+<div class="bg-light p-3">
+    <section class="profile-management py-5">
+        <div class="container">
+            <?php foreach($gifts as $gift):?>
+            <?php require('VoucherDetailModal.phtml');?>
+            <div class="voucher-card">
+                <img src="https://via.placeholder.com/50x50.png?text=P1" alt="Voucher Icon">
+                <div class="voucher-details">
+                    <div class="voucher-title">Gift No: <?php echo $gift->id ?></div>
+                    <div class="voucher-title">Title: <?php echo $gift->name ?></div>
+                    <div class="voucher-subtitle">Brand: <?php echo isset($gift->brand->title) ? $gift->brand->title : 'Unknown'; ?></div>
+                    <div class="voucher-expiry">Price: <?php echo $gift->detail[0]->price_format ?></div>
+                </div>
+                <button 
+                    class="voucher-action btn"
+                    data-bs-toggle="modal" 
+                    data-bs-target=<?php echo '#voucherDetailModal'.$gift->detail[0]->id ?>
+                >View detail ></button>
+            </div>
+
+            <?php endforeach?>
+        </div>
+    </section>
+</div>

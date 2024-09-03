@@ -17,7 +17,7 @@
             Timesheet
         </a>
         <a href="index.php?action=activity-management" class="list-group-item list-group-item-action list-group-item-primary">Activity</a>
-        <a href="index.php?action=point-management" class="list-group-item list-group-item-action list-group-item-primary">Point/Voucher</a>
+        <a href="index.php?action=reward-management" class="list-group-item list-group-item-action list-group-item-primary">Point/Voucher</a>
         <?php endif ?>
 
         <?php if (json_decode($_SESSION["AuthUser"])->Role == 'Employee'): ?>
@@ -36,7 +36,7 @@
         <a href="index.php?action=employee-apply-leave" class="list-group-item list-group-item-action list-group-item-primary">Leave</a>
         <a href="index.php?action=employee-apply-wfh" class="list-group-item list-group-item-action list-group-item-primary">WFH</a>
         <a href="index.php?action=activity-management" class="list-group-item list-group-item-action list-group-item-primary">Activity</a>
-        <a href="index.php?action=point-management" class="list-group-item list-group-item-action list-group-item-primary">Point/Voucher</a>
+        <a href="index.php?action=reward-management" class="list-group-item list-group-item-action list-group-item-primary">Point/Voucher</a>
         <?php endif ?>
         
         <a href="index.php?action=logout" class="list-group-item list-group-item-action list-group-item-primary">Logout</a>

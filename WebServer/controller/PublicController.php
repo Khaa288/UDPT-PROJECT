@@ -261,4 +261,36 @@ class PublicController
         $VIEW = "./view/WFHManagement/ApplyWFH.phtml";
         require("./template/Layout.phtml");
     }
+
+    public function toVouchers() {
+        require("./api/Endpoints.php");
+
+        $api = $get_gift_list_api;
+
+        $gifts = ApiRequest::get($api, null, null);
+
+        $VIEW = "./view/RewardManagement/ListVouchers.phtml";
+        require("./template/Layout.phtml");
+    }
+
+    public function toMyVouchers() {
+        require("./api/Endpoints.php");
+
+        $api = $get_my_gift_api;
+        $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+
+        $gifts = ApiRequest::get($api.$employee_id.'/gift', null, null);
+
+        $VIEW = "./view/RewardManagement/ListMyVouchers.phtml";
+        require("./template/Layout.phtml");
+    }
+
+    public function toSendPoint() {
+        require("./api/Endpoints.php");
+
+        $employees = ApiRequest::get($get_all_reward_employee_api, null, null);
+
+        $VIEW = "./view/RewardManagement/SendPoint.phtml";
+        require("./template/Layout.phtml");
+    }
 }

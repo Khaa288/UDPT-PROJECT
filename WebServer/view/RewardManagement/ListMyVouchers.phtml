@@ -1,0 +1,47 @@
+<!-- Navigation Bar -->
+<div class="profile-management-nav-bar">
+    <div class="container d-flex justify-content-end py-3">
+        <div class="dropdown mx-1">
+            <a href="#" class="nav-link dropdown-toggle active" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Vouchers
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="voucherDropdown">
+                <li><a class="dropdown-item" href="index.php?action=reward-management">Vouchers</a></li>
+                <li><a class="dropdown-item" href="">My Vouchers</a></li>
+            </ul>
+        </div>
+        <a href="index.php?action=to-send-point" class="mx-1 nav-link">Send point</a>
+    </div>
+</div>
+
+<!-- Header Section -->
+<header class="bg-light text-center py-5">
+    <div class="container">
+        <h1 class="display-4">My Reward</h1>
+        <p class="lead">Your current points 1000000000</p>
+    </div>
+</header>
+
+<!-- Employee Table Section -->
+<section class="profile-management py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between mb-4">
+            <h2 class="mb-0">My vouchers list</h2>
+        </div>
+
+        <div class="table-responsive">
+            <?php foreach ($gifts as $gift): ?>
+
+                <div class="voucher-card">
+                    <img src="https://via.placeholder.com/50x50.png?text=P1" alt="Voucher Icon">
+                    <div class="voucher-details">
+                        <div class="voucher-title">Gift No: <?php echo $gift->GiftId ?></div>
+                        <div class="voucher-title">Title: <?php echo $gift->Name ?></div>
+                        <div class="voucher-subtitle">Brand: <?php echo $gift->Brand->Title; ?></div>
+                    </div>
+                </div>
+
+            <?php endforeach ?>
+        </div>
+    </div>
+</section>

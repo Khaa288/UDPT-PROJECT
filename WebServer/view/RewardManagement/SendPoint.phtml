@@ -1,0 +1,70 @@
+<!-- Navigation Bar -->
+<div class="profile-management-nav-bar">
+    <div class="container d-flex justify-content-end py-3">
+        <div class="dropdown mx-1">
+            <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Vouchers
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="voucherDropdown">
+                <li><a class="dropdown-item" href="index.php?action=reward-management">Vouchers</a></li>
+                <li><a class="dropdown-item" href="index.php?action=my-reward-management">My Vouchers</a></li>
+            </ul>
+        </div>
+        <a href="" class="mx-1 nav-link active">Send point</a>
+    </div>
+</div>
+
+<div class="container-fluid p-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Send point</h5>
+            <form method="post" action="index.php?action=send-point">
+                <div class="d-flex justify-content-end">
+                    <p class="fw-bold">Your current point: </p>&nbsp;10000000
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="receiver" class="form-label">Select receiver</label>
+                            <div class="input-group">
+                                <select class="form-select" id="receiver" name="receiver">
+                                    <option value="">-- Select --</option>
+                                    <?php foreach($employees as $employee): ?>
+                                        <option value=<?php echo $employee->Employee->EmployeeId?>>
+                                            <?php echo $employee->Employee->EmployeeName?>
+                                        </option>
+                                    <?php endforeach?>
+                                </select>
+
+                                <span class="input-group-text">
+                                    <i class="bi bi-person-fill"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="points" class="form-label">Points Given</label>
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="points"
+                                    name="points"        
+                                >
+                                <span class="input-group-text">
+                                    <i class="bi bi-gift-fill"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

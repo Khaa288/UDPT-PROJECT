@@ -1,6 +1,6 @@
 <?php
     $gateway_host = 'http://127.0.0.1';
-    $gateway_port = '5000';
+    $gateway_port = '3002';
     $url = $gateway_host.':'.$gateway_port.'/api';
 
     $login_api = $url.'/auth/login';
@@ -40,4 +40,10 @@
     $accept_update_timesheet_api = $url.'/timesheet/request/'; 
     $deny_update_timesheet_api = $url.'/timesheet/request/'; 
     $request_update_timesheet_api = $url.'/timesheet/request';
+
+    $get_gift_list_api = $url.'/reward/gift';
+    $get_my_gift_api = $url.'/reward/employee/';
+    $exchange_gift_api = $url.'/reward/exchange';
+    $send_point_api = $url.'/reward/send-point';
+    $get_all_reward_employee_api = $url.'/reward/employee';
 ?>
