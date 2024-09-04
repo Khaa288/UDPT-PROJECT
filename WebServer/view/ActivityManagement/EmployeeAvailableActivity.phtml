@@ -1,0 +1,66 @@
+<header class="bg-light text-center py-4">
+    <div class="container">
+    <h1 class="display-4">Campaign</h1>
+    </div>
+</header
+<section class="campaign-management py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between mb-4">
+            <h2 class="mb-0">Available campaign for you </h2>
+        </div>
+        <?php
+            // Get the list of activities the employee has participated in
+            $participatedActivities = [];
+            foreach ($participants as $participant) {
+                if ($participant->EmployeeId== $employee_id) {
+                    $participatedActivities[] = $participant->ActivityId;
+                }
+            }
+            // Find activities that the employee has not participated in
+            $activitiesNotParticipated = [];
+            foreach ($activities as $activity) {
+                if (!in_array($activity->ActivityId, $participatedActivities)) {
+                    $activitiesNotParticipated[] = $activity; // Add the activity to the list of activities not participated in
+                }
+            }
+
+            // Output the result
+            ?>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Activity Name</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+               
+                <?php if (sizeof($activitiesNotParticipated)>0) {
+                    print"<tbody>";
+                    foreach ($activitiesNotParticipated as $activity2):
+                        
+                        require("./view/ActivityManagement/ParticipateActivityModal.phtml");
+                     
+                    print'    <tr>
+                            <td> '.$activity2->ActivityName.'</td>
+                            <td> '.$activity2->StartTime.' </td>
+                            <td> '.$activity2->EndTime.' </td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#participateActivity'.$activity2->ActivityId.'Modal">
+                                Participate
+                                </button>
+                            </td>  
+                        </tr>
+                        ';
+                    endforeach;
+                    print"</tbody>";
+                }?>
+            </table>
+        </div>       
+        <?php
+            $action_url = 'index.php?action=available-activity';
+        ?>
+    </div>
+</section>

@@ -1,0 +1,59 @@
+<!-- Header Section -->
+<header class="bg-light text-center py-5">
+    <div class="container">
+        <h1 class="display-4">Campaign Management</h1>
+        <p class="lead">View, add, edit, and manage campaign information.</p>
+    </div>
+</header>
+<!-- Campaign Table Section -->
+<section class="campaign-management py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between mb-4">
+                        <?php
+                        require("./view/ActivityManagement/CreateActivityModal.phtml");
+                        ?>
+            <h2 class="mb-0">Campaign List</h2>
+            <a href="index.php?action=create-activity" class="btn btn-outline-dark bth-lg d-flex align-items-center px-4 py-2" data-bs-toggle="modal" data-bs-target="#addCampaignModal">
+                <span class="me-2 fs-5">Add a new campaign</span>
+                <i class="bi bi-plus-circle fs-4"></i>
+            </a>
+        </div>
+
+
+        <!-- Campaign Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Activity Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($activities as $activity): ?>
+
+                        <tr>
+                        <?php $startTime = new DateTime($activity->StartTime);?>
+                        <?php $endTime = new DateTime($activity->EndTime);?>
+                            <td><?php echo $activity->ActivityName ?></td>
+                            <td><?php echo $startTime->format('Y-m-d H:i:s'); ?></td>
+                            <td><?php echo $endTime->format('Y-m-d H:i:s'); ?></td>
+
+                            <td>
+                                <a href=<?php echo 'index.php?action=activity-detail&activityId='.$activity->ActivityId ?> class="btn btn-primary btn-sm">
+                                View
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+
+        <?php
+            $action_url = 'index.php?action=activity-management';
+        ?>
+    </div>
+</section>

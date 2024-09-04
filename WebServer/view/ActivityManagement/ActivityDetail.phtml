@@ -1,0 +1,102 @@
+<header class="bg-light text-center py-4">
+    <div class="container">
+    <h1 class="display-4">Campaign Management</h1>
+    <h2 class="mb-0">Campaign of <?php echo $activity->ActivityName ?> </h2>
+    </div>
+</header>
+
+<section class="campaign-management py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between mb-4">
+            <h2 class="mb-0">Campaign Schedulde</h2>
+        </div>
+
+
+        <!-- Schedule Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                        <?php
+                        require("./view/ActivityManagement/EditActivityModal.phtml");
+                        ?>
+                <thead class="table-dark">
+                    <tr>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td><?php echo $activity->StartTime ?></td>
+                            <td><?php echo $activity->EndTime ?></td>
+
+                            <td>
+                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target=<?php echo '#editActivity' . $activity->ActivityId . 'Modal'; ?>>
+                                    <i class="bi bi-pencil-square"></i>
+                            </button>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-center align-items-center mb-4">
+             <!-- Walking Icon Section -->
+            <div class="text-center me-4"> <!-- Added a right margin for spacing -->
+            <i class="bi bi-person-walking display-4"></i>
+            <div>Total Distance</div>
+            <div>0 km</div>
+            </div>
+    
+            <!-- Clock Icon Section -->
+            <div class="text-center">
+            <i class="bi bi-alarm display-4"></i>
+            <div>Total Time</div>
+            <div>0 min</div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mb-4">
+            <h2 class="mb-0">Participants</h2>
+        </div>
+        <!-- Participants Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Employee Name</th>
+                        <th>Total KM</th>
+                        <th>Total Minute</th>
+                        
+                    </tr>
+                </thead>
+                <?php if ($participants) {
+                        print"<tbody>";
+                        foreach ($participants as $participant):
+                        if(is_object($participant)){
+                        $check = 0;
+                        for($i = 0; $i < sizeof($employees);$i++){
+                            if($employees[$i]->EmployeeId == $participant->EmployeeId ){
+                                $check = $i;
+                                break;
+                            }
+                        }
+                    
+                        print"    <tr>
+                            <td> {$employees[$check]->FirstName } {$employees[$check]->MiddleName } {$employees[$check]->LastName}</td>
+                            <td> $participant->TotalKm </td>
+                            <td> $participant->TotalMinute </td>
+                            
+                        </tr>
+                        ";
+                    }
+                    endforeach;
+                    print"</tbody>";
+                }
+                ?>
+            </table>
+        </div>
+        <?php
+            $action_url = 'index.php?action=activity-detail';
+        ?>
+    </div>
+</section>

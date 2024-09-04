@@ -1,8 +1,8 @@
-"""add employee status
+"""init
 
-Revision ID: dc0ab6577622
-Revises: d78c0cb14ba3
-Create Date: 2024-08-23 14:55:57.120483
+Revision ID: 133e5c4d1997
+Revises: 
+Create Date: 2024-08-30 15:26:06.699322
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dc0ab6577622'
-down_revision = 'd78c0cb14ba3'
+revision = '133e5c4d1997'
+down_revision = None
 branch_labels = None
 depends_on = None
 

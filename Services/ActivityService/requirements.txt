@@ -4,10 +4,5 @@ Flask-SQLAlchemy
 Flask-Migrate
 flask-marshmallow
 py_eureka_client
-<<<<<<< Updated upstream
 pymysql
-celery
-pika
-=======
-pymysql
->>>>>>> Stashed changes
+requests

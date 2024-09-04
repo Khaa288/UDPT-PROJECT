@@ -1,8 +1,16 @@
 <?php
 class PublicController
 {
+<<<<<<< Updated upstream
     public function login()
     {
+=======
+    public function login(){
+        if (isset($_REQUEST["code"])) {
+            echo $_REQUEST["code"];
+        }
+
+>>>>>>> Stashed changes
         require("./api/Endpoints.php");
 
         $api = $login_api;
@@ -57,6 +65,14 @@ class PublicController
         $VIEW = "./view/ProfileManagement/ListProfiles.phtml";
         require("./template/Layout.phtml");
     }
+    public function toActivityManagement(){
+        require("./api/Endpoints.php");
+        $activities = ApiRequest::get($get_activities_api,null);
+        $VIEW = "./view/ActivityManagement/ListActivity.phtml";
+        require("./template/Layout.phtml");
+
+        
+    }
 
     public function toProfile()
     {
@@ -75,6 +91,39 @@ class PublicController
             PublicController::toLogin();
         }
     }
+    public function toAvailableActivity(){
+        require("./api/Endpoints.php");
+        
+        if (isset($_SESSION["AuthUser"])) {
+            $activities = ApiRequest::get($get_activities_api,null);
+            $participants = ApiRequest::get($get_participants_api,null);
+            $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+
+            $VIEW = "./view/ActivityManagement/EmployeeAvailableActivity.phtml";
+
+            require("./template/Layout.phtml");
+        }
+        else {
+            PublicController::toLogin();
+        }
+    }
+    public function toActivityProgress(){
+        require("./api/Endpoints.php");
+        
+        if (isset($_SESSION["AuthUser"])) {
+            $activities = ApiRequest::get($get_activities_api,null);
+            $participants = ApiRequest::get($get_participants_api,null);
+            $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+
+            $VIEW = "./view/ActivityManagement/EmployeeActivityProgress.phtml";
+
+            require("./template/Layout.phtml");
+        }
+        else {
+            PublicController::toLogin();
+        }
+    }
+
 
     public function toAttendance()
     {
@@ -236,6 +285,7 @@ class PublicController
         $VIEW = "./view/WFHManagement/ListWFHRequests.phtml";
         require("./template/Layout.phtml");
     }
+<<<<<<< Updated upstream
 
     public function toEmployeeWFHRequest()
     {
@@ -293,4 +343,7 @@ class PublicController
         $VIEW = "./view/RewardManagement/SendPoint.phtml";
         require("./template/Layout.phtml");
     }
+=======
+    
+>>>>>>> Stashed changes
 }

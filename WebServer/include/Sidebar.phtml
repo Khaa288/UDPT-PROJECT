@@ -10,6 +10,7 @@
         >
             Profile
         </a>
+<<<<<<< Updated upstream
         <a 
             href="index.php?action=timesheet-management&page=1&pageSize=5" 
             class="list-group-item list-group-item-action list-group-item-primary"
@@ -18,6 +19,11 @@
         </a>
         <a href="index.php?action=activity-management" class="list-group-item list-group-item-action list-group-item-primary">Activity</a>
         <a href="index.php?action=reward-management" class="list-group-item list-group-item-action list-group-item-primary">Point/Voucher</a>
+=======
+        <a href="index.php?action=timesheet-management" class="list-group-item list-group-item-action list-group-item-primary">Timesheet</a>
+        <a href="index.php?action=activity-management" class="list-group-item list-group-item-action list-group-item-primary">Campaign</a>
+        <a href="index.php?action=point-management" class="list-group-item list-group-item-action list-group-item-primary">Point/Voucher</a>
+>>>>>>> Stashed changes
         <?php endif ?>
 
         <?php if (json_decode($_SESSION["AuthUser"])->Role == 'Employee'): ?>
@@ -28,6 +34,7 @@
             Profile
         </a>
         <a 
+<<<<<<< Updated upstream
             href="index.php?action=timesheet-management&page=1&pageSize=5" 
             class="list-group-item list-group-item-action list-group-item-primary"
         >
@@ -35,6 +42,20 @@
         </a>
         <a href="index.php?action=employee-apply-leave" class="list-group-item list-group-item-action list-group-item-primary">Leave</a>
         <a href="index.php?action=employee-apply-wfh" class="list-group-item list-group-item-action list-group-item-primary">WFH</a>
+=======
+            href="index.php?action=available-activity" 
+            class="list-group-item list-group-item-action list-group-item-primary"
+        >
+            Available Campaign
+        </a>
+        <a 
+            href="index.php?action=activity-progress" 
+            class="list-group-item list-group-item-action list-group-item-primary"
+        >
+            Campaign Progress
+        </a>
+        <!-- <a href="index.php?action=timesheet-management" class="list-group-item list-group-item-action list-group-item-primary">Timesheet</a>
+>>>>>>> Stashed changes
         <a href="index.php?action=activity-management" class="list-group-item list-group-item-action list-group-item-primary">Activity</a>
         <a href="index.php?action=reward-management" class="list-group-item list-group-item-action list-group-item-primary">Point/Voucher</a>
         <?php endif ?>

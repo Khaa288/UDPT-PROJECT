@@ -1,0 +1,59 @@
+<header class="bg-light text-center py-4">
+    <div class="container">
+    <h1 class="display-4">Campaign</h1>
+    </div>
+</header
+<section class="campaign-management py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between mb-4">
+            <h2 class="mb-0">Your Campaign Progress</h2>
+        </div>
+        <?php
+            $employeeParticipationInfo = [];
+               foreach ($participants as $participant) {
+                if ($participant->EmployeeId == $employee_id) {
+                    foreach ($activities as $activity) {
+                        if ($activity->ActivityId == $participant->ActivityId) {
+                            // Append activityName to the participant object
+                            $participant->ActivityName = $activity->ActivityName;
+                            // Add to the result array
+                            $employeeParticipationInfo[] = $participant;
+                            break;
+                        }
+                    }
+                }
+            }
+            // Output the result
+            ?>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Activity Name</th>
+                        <th>Total Distance</th>
+                        <th>Total Time</th>
+                        <th>End Date</th>
+                    </tr>
+                </thead>
+                <?php if (sizeof($employeeParticipationInfo)>0) {
+                    print"<tbody>";
+                    foreach ($employeeParticipationInfo as $info):
+                       
+                    print"    <tr>
+                            <td>$info->ActivityName</td>
+                            <td>$info->TotalKm </td>
+                            <td>$info->TotalMinute </td>
+                            <td>$info->EndDate </td>
+                            
+                        </tr>
+                        ";
+                    endforeach;
+                    print"</tbody>";
+                }?>
+            </table>
+        </div>       
+        <?php
+            $action_url = 'index.php?action=activity-progress';
+        ?>
+    </div>
+</section>

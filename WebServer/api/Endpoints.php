@@ -11,6 +11,13 @@
     $update_profiles_api = $url.'/employee/';
     $deactivate_profile_api = $url.'/employee/';
 
+    $get_activities_api = $url.'/activity';
+    $get_activities_id_api = $url.'/activity/';
+    $get_participants_api= $url.'/participant';
+    $get_participant_activityId = $url.'/participant/activity/';
+    $update_activity_api = $url.'/activity/update/';
+    $create_activity_api = $url.'/activity/add';
+
     $get_leaves_api = $url.'/leave';
     $get_leave_requests_api = $url.'/leave/request';
     $get_leave_pages_api = $url.'/leave/page';
@@ -30,6 +37,7 @@
     $get_employee_current_attendance_api = $url.'/attendance/employee/';
     $check_in_api = $url.'/attendance/check-in';
     $check_out_api = $url.'/attendance/check-out';
+<<<<<<< Updated upstream
 
     $get_timesheets_api = $url.'/timesheet';
     $get_timesheet_update_requests_api = $url.'/timesheet/request';
@@ -46,4 +54,11 @@
     $exchange_gift_api = $url.'/reward/exchange';
     $send_point_api = $url.'/reward/send-point';
     $get_all_reward_employee_api = $url.'/reward/employee';
+=======
+    
+   
+
+    
+
+>>>>>>> Stashed changes
 ?>

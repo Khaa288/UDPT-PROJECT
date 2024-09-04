@@ -6,7 +6,11 @@ require_once("./controller/TimesheetController.php");
 require_once("./controller/LeaveController.php");
 require_once("./controller/WfhController.php");
 require_once("./controller/AttendanceController.php");
+<<<<<<< Updated upstream
 require_once("./controller/RewardController.php");
+=======
+require_once("./controller/ActivityController.php");
+>>>>>>> Stashed changes
 require_once("./api/ApiRequest.php");
 
 $action = "";
@@ -46,6 +50,32 @@ switch ($action) {
         $controller = new PublicController();
         $controller->toProfileManagement();
         break;
+    case "activity-management":
+        $controller = new PublicController;
+        $controller->toActivityManagement();
+        break;
+    case "activity-detail":
+        $controller = new ActivityController;
+        $controller->toActivityDetail();
+        break;
+    case "create-activity":
+        $controller = new ActivityController;
+        $controller->createActivity();
+        break;
+    case "activity-progress":
+        $controller = new PublicController;
+        $controller->toActivityProgress();
+    case "available-activity":
+        $controller = new PublicController;
+        $controller->toAvailableActivity();
+        break;
+    case "authorize-strava":
+        $controller = new ActivityController;
+        $controller->authorizeStrava();
+        break;
+    case "update-activity":
+        $controller = new ActivityController;
+        $controller->updateActivity();
     case "profile":
         $controller = new PublicController();
         $controller->toProfile();
