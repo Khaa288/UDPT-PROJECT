@@ -1,6 +1,6 @@
 <?php
     $gateway_host = 'http://127.0.0.1';
-    $gateway_port = '3002';
+    $gateway_port = '5000';
     $url = $gateway_host.':'.$gateway_port.'/api';
 
     $login_api = $url.'/auth/login';
@@ -46,4 +46,5 @@
     $exchange_gift_api = $url.'/reward/exchange';
     $send_point_api = $url.'/reward/send-point';
     $get_all_reward_employee_api = $url.'/reward/employee';
+    $get_reward_employee_by_id_api = $url.'/reward/employee/';
 ?>

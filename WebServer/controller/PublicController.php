@@ -265,9 +265,9 @@ class PublicController
     public function toVouchers() {
         require("./api/Endpoints.php");
 
-        $api = $get_gift_list_api;
-
-        $gifts = ApiRequest::get($api, null, null);
+        $employee_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+        $gifts = ApiRequest::get($get_gift_list_api, null, null);
+        $employee = ApiRequest::get($get_reward_employee_by_id_api.$employee_id, null, null);
 
         $VIEW = "./view/RewardManagement/ListVouchers.phtml";
         require("./template/Layout.phtml");
@@ -287,6 +287,9 @@ class PublicController
 
     public function toSendPoint() {
         require("./api/Endpoints.php");
+
+        $sender_id = json_decode($_SESSION["AuthUser"])->EmployeeId;
+        $sender = ApiRequest::get($get_reward_employee_by_id_api.$sender_id, null, null);
 
         $employees = ApiRequest::get($get_all_reward_employee_api, null, null);
 

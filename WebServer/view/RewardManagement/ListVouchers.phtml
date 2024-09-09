@@ -14,12 +14,12 @@
     </div>
 </div>
 
-
 <!-- Header Section -->
 <header class="bg-light text-center py-5">
     <div class="container">
         <h1 class="display-4">Reward Management</h1>
-        <p class="lead">Your current points 1000000000</p>
+        <p id="userPoint" hidden><?php echo $employee->TotalPoint; ?></p>
+        Your current points <p class="lead"><?php echo number_format($employee->TotalPoint); ?></p>
     </div>
 </header>
 

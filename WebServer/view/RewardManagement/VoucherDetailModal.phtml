@@ -8,7 +8,10 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form action="index.php?action=collect-voucher" method="post">
+            <form
+                action="index.php?action=collect-voucher"
+                method="post"
+                id=<?php echo 'voucherForm' . $gift->detail[0]->id; ?>>
                 <div class="modal-body">
                     <p class="fw-bold">Brand: </p>
                     <p><?php echo isset($gift->brand->title) ? $gift->brand->title : 'Unknown'; ?></p>
@@ -17,10 +20,21 @@
                         <li class="fw-medium"><?php echo $gift->name ?></li>
                         <li>Quantity: <?php echo $gift->detail[0]->code_quantity ?></li>
                         <li>Price: <?php echo $gift->detail[0]->price_format ?></li>
+                        <li
+                            class="voucherPrice"
+                            id=<?php echo $gift->detail[0]->id; ?>
+                            hidden
+                        >
+                            <?php echo $gift->detail[0]->price ?>
+                        </li>
                     </ul>
                     <input type="text" name="brandId" value=<?php echo isset($gift->brand->id) ? $gift->brand->id : "0"; ?> hidden>
                     <input type="text" name="giftId" value=<?php echo $gift->detail[0]->id; ?> hidden>
                 </div>
+                <p
+                    class="text-danger d-flex justify-content-end px-3"
+                    id=<?php echo 'voucherError' . $gift->detail[0]->id ?>
+                ></p>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-success">Collect</button>
@@ -29,3 +43,31 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.voucherPrice').each(function() {
+        // Each form value validation
+        var priceId = $(this).attr('id');
+        var errorId = '#voucherError' + priceId;
+        var formId = '#voucherForm' + priceId;
+
+        // User point vs Price
+        var userPoint = parseInt($('#userPoint').text());
+        var price = parseInt($('#' + priceId).text());
+
+        console.log(priceId);
+        console.log(price);
+        console.log(userPoint);
+
+        // Prevent submit form if not enough point
+        $(formId).on('submit', function(event) {
+            if (userPoint < price) {
+                event.preventDefault();
+                $(errorId).text('Do not have enough point to get this');
+            }
+            else {
+                $(errorId).text('');
+            }
+        })
+    });
+</script>

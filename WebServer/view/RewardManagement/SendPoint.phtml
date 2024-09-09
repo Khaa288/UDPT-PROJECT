@@ -18,9 +18,10 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Send point</h5>
-            <form method="post" action="index.php?action=send-point">
+            <form method="post" action="index.php?action=send-point" id="sendPointForm">
                 <div class="d-flex justify-content-end">
-                    <p class="fw-bold">Your current point: </p>&nbsp;10000000
+                    <p id="userPoint" hidden><?php echo $sender->TotalPoint; ?></p>
+                    <p class="fw-bold">Your current point: </p>&nbsp;<?php echo number_format($sender->TotalPoint)?>
                 </div>
 
                 <div class="row">
@@ -28,7 +29,7 @@
                         <div class="mb-3">
                             <label for="receiver" class="form-label">Select receiver</label>
                             <div class="input-group">
-                                <select class="form-select" id="receiver" name="receiver">
+                                <select class="form-select" id="receiver" name="receiver" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach($employees as $employee): ?>
                                         <option value=<?php echo $employee->Employee->EmployeeId?>>
@@ -49,15 +50,17 @@
                             <label for="points" class="form-label">Points Given</label>
                             <div class="input-group">
                                 <input
-                                    type="text"
+                                    type="number"
                                     class="form-control"
                                     id="points"
-                                    name="points"        
+                                    name="points"
+                                    required        
                                 >
                                 <span class="input-group-text">
                                     <i class="bi bi-gift-fill"></i>
                                 </span>
                             </div>
+                            <p class="text-danger d-flex justify-content-end p-3" id="pointError"></p>
                         </div>
                     </div>
                 </div>
@@ -68,3 +71,43 @@
         </div>
     </div>
 </div>
+
+<script>
+    var userPoint = parseInt($('#userPoint').text());
+    var error = $('#pointError');
+
+    $('#points').on('input', function() {
+        var pointInput = parseInt($(this).val());
+
+        if (userPoint < pointInput) {
+            error.text('You dont have enough point to send');
+            console.log(userPoint)
+        }
+
+        else if (pointInput < 0) {
+            error.text('Point can not < 0');
+        }
+
+        else {
+            error.text('');
+        }
+    });
+
+    $('#sendPointForm').on('submit', function(event) {
+        var pointInput = parseInt($('#points').val());
+
+        if (userPoint < pointInput) {
+            event.preventDefault();
+            error.text('You dont have enough point to send');
+        }
+
+        else if (pointInput < 0) {
+            event.preventDefault();
+            error.text('Point can not < 0');
+        }
+
+        else {
+            error.text('');
+        }
+    });
+</script>
