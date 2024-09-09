@@ -2,6 +2,7 @@ from flask import jsonify, request, json, Blueprint
 from marshmallow import ValidationError
 from src.dtos.leave_request_dto import LeaveRequestDto
 from src.models.leave_model import Leave
+from src.models.timesheet_model import Timesheet
 from src.models.leave_request_model import LeaveRequest
 from src.utils import RequestStatus
 from bson import json_util
@@ -68,9 +69,14 @@ def accept_leave(request_id):
     # Change leave request status
     isCreated = json.loads(json_util.dumps(LeaveRequest.update_status(request_id, RequestStatus.ACCEPTED)))
   
-    # Get accepted_leave_request and insert to leave collection
+    # Get accepted_leave_request and insert to leave collection then update timesheet
     if isCreated:
         accepted_leave_request = LeaveRequest.get_by_id(request_id)
+        update_timesheet = Timesheet.upsert_leave_days(
+            accepted_leave_request["Employee"], 
+            accepted_leave_request["FromDate"], 
+            accepted_leave_request["ToDate"]
+        )
         created_leave = Leave.create(accepted_leave_request)
     
     return json.loads(json_util.dumps(accepted_leave_request))

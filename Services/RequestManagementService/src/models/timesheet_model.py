@@ -4,7 +4,7 @@ import math
 from flask import jsonify
 from src.models import db_timesheet
 from src.models.employee_model import Employee
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 
 @dataclass
@@ -74,7 +74,6 @@ class Timesheet():
 
         return True
 
-
     def upsert(employee, date, new_work_hour):
         updated_month = datetime.now().strptime(date, '%d-%m-%Y').date().month
         updated_year = datetime.now().strptime(date, '%d-%m-%Y').date().year
@@ -114,3 +113,33 @@ class Timesheet():
             db_timesheet.insert_one(jsonify(new_timesheet).json)
         
         return True
+
+    def upsert_leave_days(employee, from_date, to_date):
+        from_updated_date = datetime.strptime(from_date, '%d-%m-%Y').date()
+        to_updated_date = datetime.strptime(to_date, '%d-%m-%Y').date()
+
+        delta = timedelta(days=1)
+        while from_updated_date <= to_updated_date:
+            date = from_updated_date.strftime('%d-%m-%Y')
+
+            db_timesheet.update_one(
+                { 
+                    'Month': from_updated_date.month, 
+                    'Year': from_updated_date.year,
+                    'TimesheetId': { '$exists': True }
+                },
+                { 
+                    '$set': { 
+                        'Employee': employee,
+                        'TimesheetId': str(uuid.uuid4())
+                    },
+                    '$push': { 'WorkDates': { 'Date': date, 'WorkHour': 0 }} 
+                },
+                
+                upsert=True
+            )
+
+            from_updated_date += delta
+        
+        return True
+        
