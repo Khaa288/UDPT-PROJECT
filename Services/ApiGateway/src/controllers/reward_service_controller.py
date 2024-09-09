@@ -58,3 +58,12 @@ def get_all_reward_employee():
     )
     
     return res
+
+@reward.route('/employee/<employee_id>')
+def get_reward_employee(employee_id):
+    res = eureka_client.do_service(
+        app_name = "reward_service", 
+        service = f"/api/reward/employee/{employee_id}"
+    )
+    
+    return res

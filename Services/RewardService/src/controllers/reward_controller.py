@@ -45,3 +45,7 @@ def list_employee_gifts(employee_id):
 @reward.route('/employee')
 def get_all_reward_employee():
     return json.loads(json_util.dumps(Reward.list_employees()))
+
+@reward.route('/employee/<employee_id>')
+def get_reward_employee(employee_id):
+    return json.loads(json_util.dumps(Reward.get_reward_employee(employee_id)))

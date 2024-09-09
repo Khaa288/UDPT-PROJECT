@@ -97,6 +97,9 @@ class Reward():
     def list_employees():
         return db_reward.find({}, {'Employee':True, '_id':0})
 
+    def get_reward_employee(employee_id):
+        return db_reward.find_one({'Employee.EmployeeId': int(employee_id) })
+
     def list_employee_gifts(employee_id):
         reward = db_reward.find_one({'Employee.EmployeeId': int(employee_id)})
 
