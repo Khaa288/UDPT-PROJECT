@@ -108,7 +108,7 @@ def subscribe_message():
 
     channel = connection.channel()
 
-    subcribe_queue = channel.queue_declare(queue='EmployeeUpdatedQueue', exclusive=True)
+    subcribe_queue = channel.queue_declare(queue='RequestManagement_EmployeeUpdatedQueue', exclusive=True)
 
     channel.queue_bind(exchange='EmployeeUpdated', queue=subcribe_queue.method.queue)
 

@@ -1,6 +1,6 @@
 from flask import json
 import pika
-from src.models import db_attendance, db_leave, db_leave_request, db_timesheet, db_timesheet_update_request, db_wfh, db_wfh_request 
+from src.models import db_reward
 
 def callback(ch, method, properties, body):
     data = json.loads(body)
@@ -8,86 +8,12 @@ def callback(ch, method, properties, body):
     if properties.content_type == 'EmployeeUpdated':
         print(properties.content_type)
 
-        db_leave.update_many(
+        db_reward.update_many(
             { 'Employee.EmployeeId': int(data['EmployeeId']) },
             { '$set':  {
                 'Employee': {
                     'EmployeeId': int(data['EmployeeId']),
-                    'EmployeeName': f'{data["FirstName"]} {data["MiddleName"]} {data["LastName"]}',
-                    'EmployeeIdCardNum': data['IdCardNum'],
-                    'EmployeeJobTitle': data['JobTitle']
-                }
-            }},
-        )
-
-        db_leave_request.update_many(
-            { 'Employee.EmployeeId': int(data['EmployeeId']) },
-            { '$set':  {
-                'Employee': {
-                    'EmployeeId': int(data['EmployeeId']),
-                    'EmployeeName': f'{data["FirstName"]} {data["MiddleName"]} {data["LastName"]}',
-                    'EmployeeIdCardNum': data['IdCardNum'],
-                    'EmployeeJobTitle': data['JobTitle']
-                }
-            }},
-        )
-
-        db_wfh.update_many(
-            { 'Employee.EmployeeId': int(data['EmployeeId']) },
-            { '$set':  {
-                'Employee': {
-                    'EmployeeId': int(data['EmployeeId']),
-                    'EmployeeName': f'{data["FirstName"]} {data["MiddleName"]} {data["LastName"]}',
-                    'EmployeeIdCardNum': data['IdCardNum'],
-                    'EmployeeJobTitle': data['JobTitle']
-                }
-            }},
-        )
-
-        db_wfh_request.update_many(
-            { 'Employee.EmployeeId': int(data['EmployeeId']) },
-            { '$set':  {
-                'Employee': {
-                    'EmployeeId': int(data['EmployeeId']),
-                    'EmployeeName': f'{data["FirstName"]} {data["MiddleName"]} {data["LastName"]}',
-                    'EmployeeIdCardNum': data['IdCardNum'],
-                    'EmployeeJobTitle': data['JobTitle']
-                }
-            }},
-        )
-
-        db_attendance.update_many(
-            { 'Employee.EmployeeId': int(data['EmployeeId']) },
-            { '$set':  {
-                'Employee': {
-                    'EmployeeId': int(data['EmployeeId']),
-                    'EmployeeName': f'{data["FirstName"]} {data["MiddleName"]} {data["LastName"]}',
-                    'EmployeeIdCardNum': data['IdCardNum'],
-                    'EmployeeJobTitle': data['JobTitle']
-                }
-            }},
-        )
-
-        db_timesheet_update_request.update_many(
-            { 'Employee.EmployeeId': int(data['EmployeeId']) },
-            { '$set':  {
-                'Employee': {
-                    'EmployeeId': int(data['EmployeeId']),
-                    'EmployeeName': f'{data["FirstName"]} {data["MiddleName"]} {data["LastName"]}',
-                    'EmployeeIdCardNum': data['IdCardNum'],
-                    'EmployeeJobTitle': data['JobTitle']
-                }
-            }},
-        )
-
-        db_timesheet.update_many(
-            { 'Employee.EmployeeId': int(data['EmployeeId']) },
-            { '$set':  {
-                'Employee': {
-                    'EmployeeId': int(data['EmployeeId']),
-                    'EmployeeName': f'{data["FirstName"]} {data["MiddleName"]} {data["LastName"]}',
-                    'EmployeeIdCardNum': data['IdCardNum'],
-                    'EmployeeJobTitle': data['JobTitle']
+                    'EmployeeName': f'{data["FirstName"]} {data["MiddleName"]} {data["LastName"]}'
                 }
             }},
         )
@@ -108,7 +34,7 @@ def subscribe_message():
 
     channel = connection.channel()
 
-    subcribe_queue = channel.queue_declare(queue='EmployeeUpdatedQueue', exclusive=True)
+    subcribe_queue = channel.queue_declare(queue='Reward_EmployeeUpdatedQueue', exclusive=True)
 
     channel.queue_bind(exchange='EmployeeUpdated', queue=subcribe_queue.method.queue)
 

@@ -10,8 +10,6 @@ def publish_message(message, event):
 
     channel = connection.channel()
 
-    channel.exchange_declare(exchange=event, exchange_type='fanout')
-
     properties = pika.BasicProperties(event)
 
     channel.basic_publish(
