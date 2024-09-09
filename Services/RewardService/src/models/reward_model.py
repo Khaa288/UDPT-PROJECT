@@ -104,3 +104,13 @@ class Reward():
             return []
 
         return reward["Gifts"]
+    
+    def add_monthly_points():
+        reward = db_reward.find({})
+        monthly_points = 500000
+
+        db_reward.update_many(
+            # update all
+            { },
+            { "$inc": { "TotalPoint": monthly_points}  }
+        )

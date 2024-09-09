@@ -4,6 +4,7 @@ from src.config.config import Config
 from dotenv import load_dotenv
 from src.routes import api
 from src.models import ma
+from src.background_jobs import scheduler, BackgroundConfig
 
 # loading environment variables
 load_dotenv()
@@ -22,6 +23,11 @@ app.register_blueprint(api, url_prefix = "/api")
 
 # import marshmallow for mapping
 ma.init_app(app)
+
+# import background jobs
+app.config.from_object(BackgroundConfig())
+scheduler.init_app(app)
+scheduler.start()
 
 import py_eureka_client.eureka_client as eureka_client
 eureka_client.init(eureka_server="http://localhost:8761/",

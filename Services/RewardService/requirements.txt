@@ -6,3 +6,4 @@ flask-marshmallow
 py_eureka_client
 celery 
 pika
+Flask-APScheduler
