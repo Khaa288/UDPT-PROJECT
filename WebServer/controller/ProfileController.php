@@ -26,7 +26,7 @@ class ProfileController
             header("Location: index.php?action=profile");
         }
 
-        else if (json_decode($_SESSION["AuthUser"]->Role) == 'Manager') {
+        else if (json_decode($_SESSION["AuthUser"])->Role == 'Manager') {
             header("Location: index.php?action=profile-management&page=1&pageSize=5");
         }
         
