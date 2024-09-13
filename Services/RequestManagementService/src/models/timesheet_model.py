@@ -79,7 +79,7 @@ class Timesheet():
         updated_year = datetime.now().strptime(date, '%d-%m-%Y').date().year
 
         timesheet = db_timesheet.find_one({
-            'Employee': jsonify(employee).json, 
+            'Employee.EmployeeId': employee["EmployeeId"], 
             'Month': updated_month, 
             'Year': updated_year
         })
@@ -142,4 +142,3 @@ class Timesheet():
             from_updated_date += delta
         
         return True
-        
