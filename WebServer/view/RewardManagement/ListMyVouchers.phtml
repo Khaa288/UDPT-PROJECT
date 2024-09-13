@@ -10,7 +10,14 @@
                 <li><a class="dropdown-item" href="">My Vouchers</a></li>
             </ul>
         </div>
-        <a href="index.php?action=to-send-point" class="mx-1 nav-link">Send point</a>
+
+        <?php
+            $role = json_decode($_SESSION["AuthUser"])->Role;
+
+            if ($role == 'Manager'):
+        ?>
+            <a href="index.php?action=to-send-point" class="mx-1 nav-link">Send point</a>
+        <?php endif ?>
     </div>
 </div>
 

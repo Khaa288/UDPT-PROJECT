@@ -2,7 +2,14 @@
 <div class="profile-management-nav-bar">
     <div class="container d-flex justify-content-end py-3">
         <a href="" class="mx-1 nav-link active">Timesheet</a>
-        <a href="index.php?action=timesheet-request-management&page=1&pageSize=5" class="mx-1 nav-link">Request</a>
+
+        <?php
+            $role = json_decode($_SESSION["AuthUser"])->Role;
+
+            if ($role == 'Manager'):
+        ?>
+            <a href="index.php?action=timesheet-request-management&page=1&pageSize=5" class="mx-1 nav-link">Request</a>
+        <?php endif ?>
     </div>
 </div>
 
